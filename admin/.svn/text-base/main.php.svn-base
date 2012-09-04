@@ -1,4 +1,5 @@
-<?
-//The code after auth goes here
+<?php require_once("includes/header.php") ?>
 
-?>
+   main content
+
+<?php require_once("includes/footer.php") ?>

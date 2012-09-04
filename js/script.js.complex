@@ -1,0 +1,117 @@
+$(document).ready(function() {
+
+$("a.add").click(function (){
+
+      
+
+      var parent = $(this).parent();
+      var parent_name = parent.attr("class"); //numele parintelui, nu parintele ca obiect sau ceva
+      var grandparent_name = parent.parent().attr("id");
+      //alert('parent name: ' + parent_name);
+      //alert('grandparent name: ' + grandparent_name);
+      var num     = $(this).parent().children('.item').length;
+      var newNum  = new Number(num + 1);
+      var previous_item = $('#'+grandparent_name+'_'+parent_name+'_' + num);
+      var previous_item_id = previous_item.attr('id');
+      //alert('previous_item_id: ' + previous_item_id);
+      var newElem = previous_item.clone().attr('id', grandparent_name+'_'+parent_name+'_'+ newNum);
+      var newElemId = newElem.attr("id");
+      //alert('new_item_id: ' + newElemId);
+      
+      var inside = newElem.children('div');
+      //var inside_count = inside.length;
+      //alert ('exista ' + inside_count + ' div-uri in acest element nou');
+
+      inside.each(function(index) {
+            var items = $(this).children('.item');
+            var nume_div = $(this).attr('class');
+            var items_count = items.length;
+            alert('exista ' + items_count + ' itemuri in div-ul ' + nume_div);
+            if(items.length > 0){
+                  items.each(function(index){
+                        if(index > 0) {
+                              alert($(this).attr('id'));
+                              $(this).remove();
+                        } else {
+                              $(this).attr('id', newElemId +'_choice_1');
+                              //$(this).children('.title').children('ro').children('label').attr('for', $(this).attr('id') + '_ro');
+                              //$(this).children('.title').children('ro').children('input').attr('name', $(this).attr('id') + '_ro');
+                              //$(this).children('.title').children('en').children('label').attr('for', $(this).attr('id') + '_en');
+                              //$(this).children('.title').children('en').children('input').attr('name', $(this).attr('id') + '_en');
+                              //$(this).children('.score').children('label').attr('for', $(this).attr('id') + '_score');
+                              //$(this).children('.score').children('input').attr('name', $(this).attr('id') + '_score');
+                        }
+                  });
+            }
+            
+
+      });
+
+
+
+      //var inside_item = newElem.children('div').children('.item');
+      //if (inside_item.length > 0) {
+      //
+      //      inside_item.each(function(index) {
+      //            if (index>0) {
+      //                  $(this).remove();
+      //            }
+      //          //alert(index + ': ' + $(this).attr('id'));
+      //      });
+      //
+      //
+      //
+      //
+      //
+      //      //alert('exista ceva: ' + inside_item_id);
+      //} else {
+      //      alert('nincs items');
+      //}
+
+      //newElem.find('fieldset input.min').attr('name', newElemId + '_min_val_' + newNum);
+      //newElem.find('fieldset input.max').attr('name', newElemId + '_max_val_' + newNum);
+      //newElem.find('fieldset input.scoring').attr('name', newElemId + '_scoring_' + newNum);
+      //newElem.find('label.min').attr('for', newElemId + '_max_val_' + newNum);
+      //newElem.find('label.max').attr('for', newElemId + '_max_val_' + newNum);
+      //newElem.find('label.scoring').attr('for', newElemId + '_scoring_'+newNum);
+
+
+
+      previous_item.after(newElem);
+      return false;
+});
+
+
+
+//function addRatingRow() {
+//      var num     = $('.scoring_row').length;
+//      var scoring = '<?php __("Scoring") ?>';
+//      var newNum  = new Number(num + 1);
+//      var newElem = $('#scoring_row_' + num).clone().attr('id', 'scoring_row_' + newNum);
+//
+//      newElem.children(':eq(0)').attr('for', 'min_val_' + newNum);
+//      newElem.children(':eq(1)').attr('name', 'min_val_' + newNum).attr('value', '');
+//      newElem.children(':eq(2)').attr('for', 'max_val_' + newNum);
+//      newElem.children(':eq(3)').attr('name', 'max_val_' + newNum).attr('value', '');
+//      newElem.children(':eq(4)').attr('for', 'scoring_' + newNum);
+//      newElem.children(':eq(5)').attr('name', 'scoring_' + newNum).attr('value', '');
+//  
+//      $('#scoring_row_' + num).after(newElem);
+//      return false;
+//}
+
+
+//function deleteRatingRow() {
+//      var num     = $('.scoring_row').length;
+//      if (num == 1) {
+//            alert("nu mai ai de unde sterge");
+//            return false;
+//      } else {
+//            $('#scoring_row_' + num).remove();
+//            return false;
+//      }
+//}
+//
+
+
+});//end of $(document).ready

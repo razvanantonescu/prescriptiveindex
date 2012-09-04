@@ -1,0 +1,283 @@
+\section{marital\_\-satisfaction.php File Reference}
+\label{d1/d7c/a00003}\index{marital_satisfaction.php@{marital\_\-satisfaction.php}}
+
+
+\subsection{Detailed Description}
+This file containes the Marital Satisfaction Questionaire. 
+
+The questionaire is hardcodded since it had to be done quickly and has features that cannot be generated with the main tool 
+
+\subsection*{Variables}
+\begin{CompactItemize}
+\item 
+\bf{\$inf\_\-pers}\label{d1/d7c/a00003_5aa278262dd31ae338e3a8484e8c721c}
+
+\begin{CompactList}\small\item\em 2nd set of Questions \& Answers. \item\end{CompactList}\item 
+\bf{\$scala\_\-1\_\-a1}
+\begin{CompactList}\small\item\em answers for the 3rd set of questions \item\end{CompactList}\item 
+\bf{\$scala\_\-1}
+\begin{CompactList}\small\item\em Answers \& Questions for the 3rd set of questions. \item\end{CompactList}\item 
+\bf{\$sm\_\-a1}
+\begin{CompactList}\small\item\em Answers for \char`\"{}Satisfactie Maritala\char`\"{} section. \item\end{CompactList}\item 
+\bf{\$sm}
+\begin{CompactList}\small\item\em Questions \& Answers for 4th section: Satisfactie Maritala. \item\end{CompactList}\item 
+\bf{\$scala\_\-2\_\-a1} = array('Acord puternic', 'Acord moderat', 'Acord usor', 'Nici acord, nici dezacord', 'Dezacord usor', 'Dezacord moderat', 'Dezacord puternic')\label{d1/d7c/a00003_e2206d04dd987bcb6c7429c6eb7d7bbf}
+
+\begin{CompactList}\small\item\em Answers for Scala 2. \item\end{CompactList}\item 
+\bf{\$scala\_\-2}
+\begin{CompactList}\small\item\em Questions \& Answerd for Scala 2. \item\end{CompactList}\item 
+\bf{\$scala\_\-3\_\-a1}
+\begin{CompactList}\small\item\em Answers for 6th section: Scala 3. \item\end{CompactList}\item 
+\bf{\$scala\_\-3}
+\begin{CompactList}\small\item\em Questions \& Answers for 6th section: Scala 3. \item\end{CompactList}\item 
+\bf{\$scala\_\-4\_\-a1}
+\begin{CompactList}\small\item\em 1st set of answers for 7th section: Scala 4 \item\end{CompactList}\item 
+\bf{\$scala\_\-4\_\-a2}
+\begin{CompactList}\small\item\em 2nd set of answers for 7th section: Scala 4 \item\end{CompactList}\item 
+\bf{\$scala\_\-4}
+\begin{CompactList}\small\item\em Questions \& answers for 7th section: Scala 4. \item\end{CompactList}\item 
+\bf{\$sliders}
+\begin{CompactList}\small\item\em The 3 slides from the 8th section. \item\end{CompactList}\item 
+\bf{\$data}
+\begin{CompactList}\small\item\em The main questionaire array. \item\end{CompactList}\item 
+\bf{\$i} = 0
+\begin{CompactList}\small\item\em Storing the question index. \item\end{CompactList}\end{CompactItemize}
+
+
+\subsection{Variable Documentation}
+\index{marital_satisfaction.php@{marital\_\-satisfaction.php}!$data@{\$data}}
+\index{$data@{\$data}!marital_satisfaction.php@{marital\_\-satisfaction.php}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\$data}\label{d1/d7c/a00003_6efc15b5a2314dd4b5aaa556a375c6d6}
+
+
+\textbf{Initial value:}
+
+\begin{Code}\begin{verbatim} array(
+  'Email' => array('Email' => 'text'),
+  'Informatii personale' => $inf_pers,
+  'Scala 1' => $scala_1,
+  'SATISFACTIE MARITALA' => $sm,
+  'Scala 2' => $scala_2,
+  'Scala 3' => $scala_3,
+  'Scala 4' => $scala_4,
+  '' => $sliders
+)
+\end{verbatim}\end{Code}
+The main questionaire array. 
+
+It contains the 8 sections as members. First secton is the email. \_\-INFO\_\- is used for extra info. See \$scala\_\-3 \index{marital_satisfaction.php@{marital\_\-satisfaction.php}!$i@{\$i}}
+\index{$i@{\$i}!marital_satisfaction.php@{marital\_\-satisfaction.php}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\$i = 0}\label{d1/d7c/a00003_83018d9153d17d91fbcf3bc10158d34f}
+
+
+Storing the question index. 
+
+It is incremented for each question \index{marital_satisfaction.php@{marital\_\-satisfaction.php}!$scala_1@{\$scala\_\-1}}
+\index{$scala_1@{\$scala\_\-1}!marital_satisfaction.php@{marital\_\-satisfaction.php}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\$scala\_\-1}\label{d1/d7c/a00003_01278c602fff48237f84094690443dc1}
+
+
+\textbf{Initial value:}
+
+\begin{Code}\begin{verbatim} array(
+  'Va face placere compania sotiei/sotului?' => $scala_1_a1,
+  'Sunteti fericit/fericita?' => $scala_1_a1,
+  'Considerati ca sotul/sotia este o persoana atractiva?' => $scala_1_a1,
+  'Va place sa faceti lucruri impreuna?' => $scala_1_a1,
+  'Va place sa va imbratisati sotul/sotia?' => $scala_1_a1,
+  'Va respectati sotul/ sotia?' => $scala_1_a1,
+  'Sunteti mandru/ mandra de sotul/ sotia dumneavoastra?' => $scala_1_a1,
+  'Are relatia dumneavoastra si o parte romantica?' => $scala_1_a1,
+  'Va iubiti sotul/ sotia?' => $scala_1_a1,
+)
+\end{verbatim}\end{Code}
+Answers \& Questions for the 3rd set of questions. 
+
+\index{marital_satisfaction.php@{marital\_\-satisfaction.php}!$scala_1_a1@{\$scala\_\-1\_\-a1}}
+\index{$scala_1_a1@{\$scala\_\-1\_\-a1}!marital_satisfaction.php@{marital\_\-satisfaction.php}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\$scala\_\-1\_\-a1}\label{d1/d7c/a00003_c5683b1a8dd609e69d41c2d1dfe7c9bd}
+
+
+\textbf{Initial value:}
+
+\begin{Code}\begin{verbatim} array(
+  '+2 Da', 
+  '+1 Mai degraba da', 
+  '0 Nici da nici nu', 
+  '-1 Mai degraba nu', 
+  '-2 Nu'
+)
+\end{verbatim}\end{Code}
+answers for the 3rd set of questions 
+
+\index{marital_satisfaction.php@{marital\_\-satisfaction.php}!$scala_2@{\$scala\_\-2}}
+\index{$scala_2@{\$scala\_\-2}!marital_satisfaction.php@{marital\_\-satisfaction.php}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\$scala\_\-2}\label{d1/d7c/a00003_5c618115ee8d252e44eff6f86810700c}
+
+
+\textbf{Initial value:}
+
+\begin{Code}\begin{verbatim} array(
+  '__INFO__' => 'In cadrul urmatoarelor opt intrebari, veti descrie atat situati generala din cultura dumneavoastra cat si cea din familie. Aceste doua dimensiuni nu trebuie sa fie in corcondanta, va rugam sa separati perspectiva proprie de cunostintele transmise din societate.',
+  'In aceasta societate copiii se mandresc cu realizarile personale ale parintilor.' => $scala_2_a1,
+  'In aceasta societate parintii se mandresc cu realizarile personale ale copiiilor.' => $scala_2_a1,
+  'In aceasta societate, parintii in varsta in general locuiesc acasa cu copiii lor.' => $scala_2_a1,
+  'In aceasta societate, copiii locuiesc in general cu parintii lor pana cand se casatoresc.' => $scala_2_a1,
+  'Consider ca copiii trebuie sa se mandreasca cu realizarile personale ale parintilor.' => $scala_2_a1,
+  'Consider ca parintii ar trebui sa fie mandri de realizarile personale ale copiiilor.' => $scala_2_a1,
+  'Consider ca parintii in varsta ar trebui sa locuiasca acasa cu copiii lor.' => $scala_2_a1,
+  'Consider ca copiii ar trebui sa locuiasca cu parintii pana cand se casatoresc.' => $scala_2_a1,
+)
+\end{verbatim}\end{Code}
+Questions \& Answerd for Scala 2. 
+
+\index{marital_satisfaction.php@{marital\_\-satisfaction.php}!$scala_3@{\$scala\_\-3}}
+\index{$scala_3@{\$scala\_\-3}!marital_satisfaction.php@{marital\_\-satisfaction.php}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\$scala\_\-3}\label{d1/d7c/a00003_244f3b0b5acb6fc6f405db0fa1dfdd88}
+
+
+\textbf{Initial value:}
+
+\begin{Code}\begin{verbatim} array(
+  '__INFO__' => 'Aceasta scala este construita pentru a aprecia modul in care dvs. si partenera/partenera faceti fata stresului. Va rugam sa indicate primul raspuns pe care il simtiti mai apropiat. Va rugam sa fiti foarte sincer. Completati fiecare item prin marcarea variantei care se poriveste cel mai bine situatiei dvs. personale. Nu exista raspunsuri gresite.',
+  'Ii spun partenerului meu/partenerei mele ca ii apreciez suportul practic, sfaturile sau ajutorul.' => $scala_3_a1,
+  'Ii spun deschis partenerului meu/partenerei mele ce simt si ca as aprecia suportul lui/ei emotional.' => $scala_3_a1,
+  'Cand partenerul/ partenera mea este stresat/a este problema ei/lui.' => $scala_3_a1,
+  'Cand sunt stresat/stresata, partenerul meu se asteapta sa ma descurc singur/a.' => $scala_3_a1,
+  'Cand unul dintre noi este stresat, il consideram "stresul nostru".' => $scala_3_a1,
+  'Cand sunt stresat/a, partenerul/partenera ma asculta si imi ofera oportunitatea sa comunic ceea ce ma deranjeaza cu adevarat.' => $scala_3_a1,
+  'Cand sunt stresat/a, partenerul/ partenera meu/mea nu considera acesta un lucru serios.' => $scala_3_a1,
+  'Partenerul/ partenera mea da dovada de empatie si intelegere cand am nevoie.' => $scala_3_a1,
+  'Cand sunt stresat/a, partenerul/ partenera imi ofera support, dar o face fara sa vrea si lipsit de motivatie.' => $scala_3_a1,
+  'Cand suntem stresati, ne ajutam reciproc sa observam problema dintr-o alta perspectiva.' => $scala_3_a1,
+  'Cand suntem stresati, facem ceva impreuna, suntem afectuosi si facem fata impreuna stresului.' => $scala_3_a1,
+)
+\end{verbatim}\end{Code}
+Questions \& Answers for 6th section: Scala 3. 
+
+\index{marital_satisfaction.php@{marital\_\-satisfaction.php}!$scala_3_a1@{\$scala\_\-3\_\-a1}}
+\index{$scala_3_a1@{\$scala\_\-3\_\-a1}!marital_satisfaction.php@{marital\_\-satisfaction.php}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\$scala\_\-3\_\-a1}\label{d1/d7c/a00003_970e8c5d7f5e6f4c7ea6332492f94518}
+
+
+\textbf{Initial value:}
+
+\begin{Code}\begin{verbatim} array(
+  'niciodata / foarte rar', 
+  'rar', 
+  'cateodata', 
+  'des', 
+  'foarte des'
+)
+\end{verbatim}\end{Code}
+Answers for 6th section: Scala 3. 
+
+\index{marital_satisfaction.php@{marital\_\-satisfaction.php}!$scala_4@{\$scala\_\-4}}
+\index{$scala_4@{\$scala\_\-4}!marital_satisfaction.php@{marital\_\-satisfaction.php}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\$scala\_\-4}\label{d1/d7c/a00003_d573e18b47819a121c1dd0214672b2c7}
+
+
+\textbf{Initial value:}
+
+\begin{Code}\begin{verbatim} array(
+  '1. Oferi atentie parfumului, deodorantului sau afteshave-ului pe care le folosesc alte persoane?' => $scala_4_a1,
+  'Cat de important este pentru tine ca partenerul tau/partenera ta sa miroasa placut?' => $scala_4_a2,
+  'Simti mirosul de transpiratie al altor oameni?' => $scala_4_a1,
+  'Cand o persoana are un miros al corpului placut, aceasta te face sa o gasesti ca fiind neatractiva? Mirosul corpului are........' => $scala_4_a2,
+  'Esti in public si stai langa cineva care are un miros neplacut. Cauti un alt loc daca este posibil?'=> array(
+    'Da', 'Probabil', 'Poate', 'Probabil nu', 'Nu'
+  ),
+  'Cat de importante sunt mirosurile pentru tine in viata de zi cu zi?' => array(
+    'Foarte important', 'Destul de important', 'Putin important', 'Mai degraba neimportant decat important', '(Aproape) deloc important'
+  ),
+  'Oamenii difera in ceea ce priveste sensibilitatea la mirosuri. Un miros neplacut poate lasa o persoana neafectata, insa sa fie de nesuportat pentru o alta persoana. Cat sensibility la mirosuri considerati ca sunteti?' => array(
+    'Mult mai sensibil decat ceilalti', 'Mai sensibil decat ceilalti', 'La fel de sensibil ca ceilalti', 'Mai putin sensibil decat ceilalti', 'Mult mai putin sensibil decat ceilalti'
+  ),
+)
+\end{verbatim}\end{Code}
+Questions \& answers for 7th section: Scala 4. 
+
+\index{marital_satisfaction.php@{marital\_\-satisfaction.php}!$scala_4_a1@{\$scala\_\-4\_\-a1}}
+\index{$scala_4_a1@{\$scala\_\-4\_\-a1}!marital_satisfaction.php@{marital\_\-satisfaction.php}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\$scala\_\-4\_\-a1}\label{d1/d7c/a00003_7110dc6a3f39502ae87819281b7c10c8}
+
+
+\textbf{Initial value:}
+
+\begin{Code}\begin{verbatim} array(
+  'Intotdeauna', 
+  'De obicei', 
+  'Cateodata', 
+  'Rar', 
+  'Niciodata'
+)
+\end{verbatim}\end{Code}
+1st set of answers for 7th section: Scala 4 
+
+\index{marital_satisfaction.php@{marital\_\-satisfaction.php}!$scala_4_a2@{\$scala\_\-4\_\-a2}}
+\index{$scala_4_a2@{\$scala\_\-4\_\-a2}!marital_satisfaction.php@{marital\_\-satisfaction.php}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\$scala\_\-4\_\-a2}\label{d1/d7c/a00003_c2675515d6d7756748e91de81940e39e}
+
+
+\textbf{Initial value:}
+
+\begin{Code}\begin{verbatim} array(
+  'Foarte multa influenta', 
+  'Multa influenta', 
+  'Influenta moderata', 
+  'Putina influenta', 
+  '(Aproape) nu are influenta'
+)
+\end{verbatim}\end{Code}
+2nd set of answers for 7th section: Scala 4 
+
+\index{marital_satisfaction.php@{marital\_\-satisfaction.php}!$sliders@{\$sliders}}
+\index{$sliders@{\$sliders}!marital_satisfaction.php@{marital\_\-satisfaction.php}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\$sliders}\label{d1/d7c/a00003_97ccdd6082fec9989cb0645740004d58}
+
+
+\textbf{Initial value:}
+
+\begin{Code}\begin{verbatim} array(
+  'Imaginati-va ca sunteti persoana A (stanga). Persoana B se apropie de dvs. Daca este un strain, cat de mult se poate apropia de dvs. pentru a va simti confortabil in conversatie? Va rugam sa indicati pe scala de mai jos.' => 'slider',
+  'Imaginati-va ca sunteti persoana A (stanga). Persoana B se apropie de dvs. Daca este o cunostinta (nu foarte apropiata), cat de mult se poate apropia de dvs. pentru a va simti confortabil in conversatie? Va rugam sa indicati pe scala de mai jos.' => 'slider',
+  'Imaginati-va ca sunteti persoana A (stanga). Persoana B se apropie de dvs. Daca este o persoana apropiata (un prieten sau ruda), cat de mult se poate apropia de dvs. pentru a va simti confortabil in conversatie? Va rugam sa indicati pe scala de mai jos.' => 'slider',
+)
+\end{verbatim}\end{Code}
+The 3 slides from the 8th section. 
+
+\index{marital_satisfaction.php@{marital\_\-satisfaction.php}!$sm@{\$sm}}
+\index{$sm@{\$sm}!marital_satisfaction.php@{marital\_\-satisfaction.php}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\$sm}\label{d1/d7c/a00003_63c3cc2a072df683705d4c1b0a8b86b4}
+
+
+\textbf{Initial value:}
+
+\begin{Code}\begin{verbatim} array(
+  '__INFO__' => 'Va rugam sa alegeti cifra din scala urmatoare pentru a indica cat de satisfacut/a sau nesatisfactu/a sunteti in casnicia curenta. Incercuiti cifra de la finalul fiecarei intrebari.',
+  'Cat de satisfacut/satisfacuta sunteti de casatoria dumneavoastra?' => $sm_a1,
+  'Cat de satisfacut/satisfacuta sunteti de partenerul/partenera dvs. in calitate de sot/sotie?' => $sm_a1,
+  'Cat de satisfacut/satisfacuta sunteti de relatia pe care o aveti cu sotul/ sotia?' => $sm_a1,
+)
+\end{verbatim}\end{Code}
+Questions \& Answers for 4th section: Satisfactie Maritala. 
+
+\index{marital_satisfaction.php@{marital\_\-satisfaction.php}!$sm_a1@{\$sm\_\-a1}}
+\index{$sm_a1@{\$sm\_\-a1}!marital_satisfaction.php@{marital\_\-satisfaction.php}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\$sm\_\-a1}\label{d1/d7c/a00003_497e514872967bb7a656de14654619f5}
+
+
+\textbf{Initial value:}
+
+\begin{Code}\begin{verbatim} array(
+  '1 foarte insatisfacut',
+  2,
+  3,
+  4,
+  5,
+  6,
+  '7 foarte satisfacut'
+)
+\end{verbatim}\end{Code}
+Answers for \char`\"{}Satisfactie Maritala\char`\"{} section. 
+

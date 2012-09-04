@@ -1,0 +1,42 @@
+$(document).ready(function() {
+
+$(".add_row a").click(function (){
+      var parent = $(this).parent().parent().attr("id");
+      alert(parent);
+      return false;
+});
+
+
+
+//function addRatingRow() {
+//      var num     = $('.scoring_row').length;
+//      var scoring = '<?php __("Scoring") ?>';
+//      var newNum  = new Number(num + 1);
+//      var newElem = $('#scoring_row_' + num).clone().attr('id', 'scoring_row_' + newNum);
+//
+//      newElem.children(':eq(0)').attr('for', 'min_val_' + newNum);
+//      newElem.children(':eq(1)').attr('name', 'min_val_' + newNum).attr('value', '');
+//      newElem.children(':eq(2)').attr('for', 'max_val_' + newNum);
+//      newElem.children(':eq(3)').attr('name', 'max_val_' + newNum).attr('value', '');
+//      newElem.children(':eq(4)').attr('for', 'scoring_' + newNum);
+//      newElem.children(':eq(5)').attr('name', 'scoring_' + newNum).attr('value', '');
+//  
+//      $('#scoring_row_' + num).after(newElem);
+//      return false;
+//}
+
+
+function deleteRatingRow() {
+      var num     = $('.scoring_row').length;
+      if (num == 1) {
+            alert("nu mai ai de unde sterge");
+            return false;
+      } else {
+            $('#scoring_row_' + num).remove();
+            return false;
+      }
+}
+
+
+
+});//end of $(document).ready
