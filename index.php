@@ -11,8 +11,13 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link href="css/reset.css" rel="stylesheet" type="text/css" />
 	<link href="css/uvt.css" rel="stylesheet" type="text/css" />
+	<link href="css/jquery.ui.datepicker.css" rel="stylesheet" type="text/css" />
+	<link href="css/datepicker.css" rel="stylesheet" type="text/css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script src="js/script.js"></script>
+
+	<script src=js/jquery-1.8.0.min.js"></script>
+	<script src="js/jquery-ui-1.8.23.custom.min.js"></script>
 	<?php //function __($text){echo $text;} ?>
 </head>
 <body>
@@ -33,23 +38,25 @@ if(isset($_POST["submit"])){
 		$subj_gender = $_POST["subj_gender"];
 	}
 
+	if(isset($_POST["subj_bdate"])) {
+		$subj_bdate = $_POST["subj_bdate"];
+	}
+
 	if (isset($_POST["options"])) {
 		$sel_options = $_POST["options"];
 	}
-
-
 	if(isset($_POST["subj_email"]))	{
 		$subj_email = mysql_real_escape_string(htmlspecialchars($_POST["subj_email"]));
 		
 		if(!subject_exists($subj_email)) {
-
-			$query = "INSERT INTO subjects (`first_name`, `last_name`, `gender`, `email`)
-					VALUES ('".$subj_first_name."', '".$subj_last_name."', '".$subj_gender."', '".$subj_email."') ";
+		
+			$query = "INSERT INTO subjects (`first_name`, `last_name`, `gender`, `birth_date`, `email`)
+					VALUES ('".$subj_first_name."', '".$subj_last_name."', '".$subj_gender."', '".$subj_bdate."', '".$subj_email."') ";
 			 
 			$result = mysql_query($query, $dbconnect);
 			confirm_query($result);
 			$subj_id = mysql_insert_id();
-			$mesaj[] = "Your request has been sent. Blabla.";
+			$mesaj[] = "Your request has been sent.";
 			$_SESSION["mesaj"] = $mesaj;
 			
 			if(isset($sel_options)) {
@@ -59,8 +66,14 @@ if(isset($_POST["submit"])){
 					confirm_query($result);
 				}
 			}
-
-
+?>
+<script>
+	$(document).ready(function(){
+		$('#join_form').remove();
+		$('#info .info.content').css('display', 'block');
+	});
+</script>
+<?php
 		} else {
 			$mesaj[] = "This email adress is already in the database.";
 			$_SESSION["mesaj"] = $mesaj;
@@ -96,7 +109,7 @@ if(isset($_POST["submit"])){
 		<div id="join">
 			<h1 class="join"><?php __("Join the study") ?></h1>
 			<?php output_message() ?>
-			<form id="" action="" method="post">
+			<form id="join_form" action="" method="post">
 			     <div class="ro">
 					<fieldset>
 						<label for="subj_first_name"><?php __("First Name") ?>:</label>
@@ -108,6 +121,9 @@ if(isset($_POST["submit"])){
 							<option value="m"><?php __("male") ?></option>
 							<option value="f"><?php __("female") ?></option>
 						</select>
+						<label for="subj_bdate" class="subj_bdate"><?php __("Date of Birth") ?>:</label>
+						<input id="datepicker" class="required subj_bdate" name="subj_bdate" type="text" value="" />
+
 						<label for="subj_email"><?php __("Email") ?>:</label>
 						<input class="required" name="subj_email" type="text" value="" />
 					</fieldset>
@@ -130,6 +146,7 @@ if(isset($_POST["submit"])){
 							}
 						?>
 
+
 					</fieldset>
 				</div>
 				<div class="clear">
@@ -148,5 +165,21 @@ if(isset($_POST["submit"])){
 		<div id="copyright">&copy; 2012 UVT</div>
 	</div>
 </div>
+
+<script>
+$(function() {
+	$(function() {
+		$( "#datepicker" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dayNamesMin: ["D", "L", "M", "M", "J", "V", "S"],
+			dateFormat: "yy-mm-dd",
+			yearRange: "c-70:c"
+		});
+
+	});
+});
+</script>
+
 </body>
 </html>

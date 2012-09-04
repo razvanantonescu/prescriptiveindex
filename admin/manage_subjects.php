@@ -128,6 +128,12 @@
 
       <p class="clear"><a href="edit_subject.php"><?php __("Add subject") ?></a></p>
 
+      <form action="import_subjects.php" method="post" enctype="multipart/form-data">
+         <label for="file"><?php __('Import subjects from csv file') ?></label>
+         <input type="file" name="file" id="file" />
+         <input type="submit" name="submit" value="<?php __("Import subjects") ?>"/>
+      </form>
+
    </div>
   
 <?php require_once("../includes/footer.php") ?>

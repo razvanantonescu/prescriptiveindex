@@ -3,7 +3,7 @@
 
 <?php
    if(isset($_POST["submit"])){
-	 //echo "<pre>";print_r($_POST);echo "<pre>";exit;
+// echo "<pre>"; print_r($_POST); die;
       if(isset($_POST["action"])) {
          $action = $_POST["action"];
       } else {
@@ -47,19 +47,20 @@ if ($action == "add") {
       
             //get the questions
             for ($index_q = 1; $index_q <= $number_of_questions; $index_q++) {
-            
+
+               $question_type = $_POST["question_".$index_q."_type"];
                $question["ro"] = htmlspecialchars($_POST["question_".$index_q."_ro"]);
                $question["en"] = htmlspecialchars($_POST["question_".$index_q."_en"]);
                $question_name = mysql_real_escape_string (json_encode($question));
    
-               $query = "INSERT INTO questions (`questionnaire_id`,`name`)
-                        VALUES ('".$questionnaire_id."', '".$question_name."')";
+               $query = "INSERT INTO questions (`questionnaire_id`,`name`,`type`)
+                        VALUES ('".$questionnaire_id."', '".$question_name."', '".$question_type."')";
                if ($result = mysql_query($query, $dbconnect)) {
                   $question_id = mysql_insert_id();
                   $question_name = get_question_name($question_id, $lang);
                   $mesaj[] = "{$question_name} was added to {$questionnaire_name}.";
                   
-                  for ($index_c = 1; $index_c <= 5; $index_c++) {
+                  for ($index_c = 1; $index_c <= $_POST['number_of_choices_q'.$index_q]; $index_c++) {
                   
                      $choice["ro"] = addslashes($_POST["question_".$index_q."_choice_".$index_c."_ro"]);
                      $choice["en"] = addslashes($_POST["question_".$index_q."_choice_".$index_c."_en"]);
@@ -90,6 +91,7 @@ if ($action == "add") {
       redirect("view_quest.php?questionnaire_id={$questionnaire_id}");
 }
 
+
 // EDIT
 
 if ($action == "edit") {
@@ -112,20 +114,26 @@ if ($action == "edit") {
 
       //get & process the questions for this questionnaire
 
-      $rel_questions = get_rel_questions_for_questionnaire($questionnaire_id);
-      //print_r($rel_questions); exit;
-      $sel_questions = array();
+      $rel_questions = get_rel_questions_for_questionnaire($questionnaire_id); // get all questions related to this questionnaire
+      $sel_questions = array();		// empty array to collect id's of the remaining questions
 
       for ($index_q = 1; $index_q <= $number_of_questions; $index_q++) {
-      
+
+            $question_type = $_POST["question_".$index_q."_type"];
             $question["ro"] = htmlspecialchars($_POST["question_".$index_q."_ro"]);
             $question["en"] = htmlspecialchars($_POST["question_".$index_q."_en"]);
             $question_name = mysql_real_escape_string(json_encode($question));
-            if(isset($_POST["question_id_".$index_q])) {
+
+
+/*
+ * intrebare existenta
+ */
+            if(isset($_POST["question_id_".$index_q])) { 
                $question_id = $_POST["question_id_".$index_q];
-               $sel_questions[] = $_POST["question_id_".$index_q];
+               $sel_questions[] = $question_id;
                $query = "UPDATE questions SET 
-                        `name` = '".$question_name."' 
+                        `name` = '".$question_name."', 
+                        `type` = '".$question_type."' 
                         WHERE `question_id` = '".$question_id."' 
                         ";
                $result = mysql_query($query, $dbconnect);
@@ -135,33 +143,59 @@ if ($action == "edit") {
                   $mesaj[] = "{$question_name} was updated.";
                }
 
-               for ($index_c = 1; $index_c <= 5; $index_c++) {
+					$rel_choices = get_rel_choices_for_question($question_id);
+					$sel_choices = array();			// empty array to collect id's of the remianing choices
+
+               for ($index_c = 1; $index_c <= $_POST['number_of_choices_q'.$index_q]; $index_c++) {
    
                   $choice["ro"] = htmlspecialchars($_POST["question_".$index_q."_choice_".$index_c."_ro"]);
                   $choice["en"] = htmlspecialchars($_POST["question_".$index_q."_choice_".$index_c."_en"]);
                   $choice_name = mysql_real_escape_string(json_encode($choice));
                   $choice_score = htmlspecialchars($_POST["question_".$index_q."_choice_".$index_c."_score"]);
-                  $choice_id = $_POST["question_".$index_q."_choice_".$index_c."_id"];
-   
-                  $query = "UPDATE choices SET
-                           `name` = '".$choice_name."', 
-                           `score` = '".$choice_score."'
-                           WHERE `choice_id` = '".$choice_id."'
-                           ";
-                  $result = mysql_query($query, $dbconnect);
-                  confirm_query($result);
-               }
-            } else {
 
-               $query = "INSERT INTO questions (`questionnaire_id`,`name`)
-                        VALUES ('".$questionnaire_id."', '".$question_name."')";
+		            if(isset($_POST["question_".$index_q."_choice_".$index_c."_id"])) {
+							$choice_id = $_POST["question_".$index_q."_choice_".$index_c."_id"];
+							$sel_choices[] = $choice_id;
+							$query = "UPDATE choices SET
+										`name` = '".$choice_name."', 
+										`score` = '".$choice_score."'
+										WHERE `choice_id` = '".$choice_id."'
+										";
+							$result = mysql_query($query, $dbconnect);
+							confirm_query($result);
+						} else {
+                     $query = "INSERT INTO choices (`question_id`, `name`, `score`)
+                              VALUES ('".$question_id."', '".$choice_name."', '".$choice_score."')";
+							if ($result = mysql_query($query, $dbconnect)) {
+								$choice_id = mysql_insert_id();
+								$sel_choices[] = $choice_id;
+							}
+						}
+						
+               }
+
+					// remove deleted choices
+					foreach ($rel_choices as $choice_id) {
+						if (!in_array((int)$choice_id, $sel_choices)) {
+							$query = "DELETE from choices WHERE `choice_id` = '".$choice_id."' ";
+							$result = mysql_query($query, $dbconnect);
+							confirm_query($result);
+						}
+					}
+
+/*
+ * intrebare noua
+ */
+            } else {
+               $query = "INSERT INTO questions (`questionnaire_id`,`name`,`type`)
+                        VALUES ('".$questionnaire_id."', '".$question_name."', '".$question_type."')";
                if ($result = mysql_query($query, $dbconnect)) {
                   $question_id = mysql_insert_id();
                   $question_name = get_question_name($question_id, $lang);
                   $questionnaire_name = get_questionnaire_name($questionnaire_id, $lang);
                   $mesaj[] = "{$question_name} was added to {$questionnaire_name}.";
                   
-                  for ($index_c = 1; $index_c <= 5; $index_c++) {
+                  for ($index_c = 1; $index_c <= $_POST['number_of_choices_q'.$index_q]; $index_c++) {
                   
                      $choice["ro"] = htmlspecialchars($_POST["question_".$index_q."_choice_".$index_c."_ro"]);
                      $choice["en"] = htmlspecialchars($_POST["question_".$index_q."_choice_".$index_c."_en"]);
@@ -206,6 +240,7 @@ if ($action == "edit") {
             confirm_query($result);
          }
       }
+
       $_SESSION["mesaj"] = $mesaj;
       redirect("view_quest.php?questionnaire_id={$questionnaire_id}");
 }

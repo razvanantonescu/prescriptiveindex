@@ -87,6 +87,9 @@ if(isset($_GET["study_id"])){
       </ul>
 
       <p><a href="edit_study.php?study_id=<?php echo $study_id ?>"><?php __("Edit study") ?></a></p>
+
+      <a class="download csv" href="csv.php?study_id=<?php echo $study_id ?>" title="<?php __('Download in csv format') ?>"><?php __('Download in csv format') ?></a>
+
    </div>
 
 <?php

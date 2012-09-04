@@ -16,6 +16,8 @@ if(isset($_GET["questionnaire_id"])){
       $max_score = $row["max_score"];
 ?>
 
+<!-- edit questionnnaire -->
+
    <h1 class="quest"><?php __("Edit Questionnaire")?> - <?php echo $questionnaire_name ?></h1>
    
    <form id="questionnaire" class="questionnaire" action="process_quest.php" method="POST">
@@ -48,7 +50,10 @@ if(isset($_GET["questionnaire_id"])){
             <label class="inline" for="quest_max_score"><?php __("Maximum score") ?></label>
             <input class="required" class="inline" name="quest_max_score" type="text" value="<?php echo $max_score ?>" />
       </fieldset>
-   
+
+
+      <div class="questions_section">
+
       <div class="question">
       
       <?php
@@ -56,10 +61,11 @@ if(isset($_GET["questionnaire_id"])){
          $index_q = 0;
          while ($row = mysql_fetch_array($result_questions)) {
             $question_id = $row["question_id"];
+            $question_type = $row["type"];
             $question_name_ro = decode($row["name"], "ro");
             $question_name_en = decode($row["name"], "en");
             $index_q++;
-      ?>
+         ?>
    
             <div id="question_<?php echo $index_q ?>" class="question item">
    
@@ -75,6 +81,10 @@ if(isset($_GET["questionnaire_id"])){
                      <input class="required" name="question_<?php echo $index_q ?>_en" type="text" value="<?php echo $question_name_en ?>" />
                   </div>
                </fieldset>
+               <select name="question_<?php echo $index_q ?>_type" onchange="toggle_question_type(this)" >
+                  <option value="text" <?php if($question_type == 'text'): ?> selected <?php endif; ?>><?php __('text field') ?></option>
+                  <option value="choice" <?php if($question_type == 'choice'): ?> selected <?php endif; ?>><?php __('choice') ?></option>
+               </select>
       
                <div class="choice">
    
@@ -111,16 +121,27 @@ if(isset($_GET["questionnaire_id"])){
                      }
                   ?>
                </div><!-- end div.choices -->
+      <div class="controls" <?php if($question_type == 'text'): ?> style="display:none;" <?php endif; ?>>
+         <a class="add_choice"		href="add_choice"		onclick="add_choice(this);		return false;">[ + ] <?php __("Add answer choice ") ?></a>
+         <br />
+         <a class="delete_choice" href="delete_choice"	onclick="delete_choice(this);	return false;">[ + ] <?php __("Remove choice ") ?></a>
+         <input type="hidden" name="number_of_choices_q<?php echo $index_q ?>" value="<?php echo $index_c ?>">
+      </div>
+
             </div><!-- end div.question.item-->
       <?php
          }
       ?>
       
-         <a class="add" href="add">[ + ] <?php __("Add question") ?></a>
-         <a class="delete" href="delete">[ - ] <?php __("Delete question") ?></a>
-         <input type="hidden" name="number_of_questions" value="<?php echo $index_q ?>">
-   
       </div><!-- end div .questions -->
+      <div class="controls">
+         <a class="add_question"    href="add_question"     onclick="add_question(this); return false;">[ + ] <?php __("Add question") ?></a>
+         <br />
+         <a class="delete_question" href="delete_question"  onclick="delete_question(this); return false;">[ - ] <?php __("Delete question") ?></a>
+         <input type="hidden" name="number_of_questions" value="<?php echo $index_q ?>">
+      </div>
+
+      </div>
    
       <div class="rating">
             <h2><?php __("Rating grid") ?></h2>
@@ -176,7 +197,11 @@ if(isset($_GET["questionnaire_id"])){
    <?
    } else { /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    ?>
-   
+
+
+
+<!-- ADD questionnnaire -->
+
    <h1 class="quest"><?php __("Add Questionnaire") ?></h1>
    
    <form id="questionnaire" class="questionnaire" action="process_quest.php" method="POST">
@@ -208,52 +233,19 @@ if(isset($_GET["questionnaire_id"])){
             <label class="inline" for="quest_max_score"><?php __("Maximum score") ?></label>
             <input class="required" class="inline" name="quest_max_score" type="text" value="" />
       </fieldset>
-        
-      <div class="question">
-         <div id="question_1" class="question item">
-            <h3><?php __("Question no.") ?> <span class="number">1</span></h3>
-            <fieldset class="title">
-                  <div class="ro">
-                        <label for="question_1_ro"><?php __("Question (ro)") ?></label>
-                        <input class="required" name="question_1_ro" type="text" value="" />
-                  </div>
-                  <div class="en">
-                        <label for="question_1_en"><?php __("Question (en)") ?></label>
-                        <input class="required" name="question_1_en" type="text" value="" />
-                  </div>
-            </fieldset>
-   
-            <div class="choice">
-               <?php
-                  for($index_c=1; $index_c <=4; $index_c++) {
-               ?>
-                  <div id="question_1_choice_<?php echo $index_c ?>" class="choice item">
-                  <fieldset class="title">
-                     <div class="ro">
-                        <label for="question_1_choice_<?php echo $index_c ?>_ro"><?php __("Choice (ro)") ?> <span class="number"><?=$index_c?></span></label>
-                        <input class="required" name="question_1_choice_<?php echo $index_c ?>_ro" type="text" value="" />
-                     </div>
-                     <div class="en">
-                        <label for="question_1_choice_<?php echo $index_c ?>_en"><?php __("Choice (en)") ?> <span class="number"><?=$index_c?></span></label>
-                        <input class="required" name="question_1_choice_<?php echo $index_c ?>_en" type="text" value="" />
-                     </div>
-                  </fieldset>
-                  <fieldset class="inline score">
-                     <label class="clear" for="question_1_choice_<?php echo $index_c ?>_score"><?php __("Score") ?></label>
-                     <input class="required" class="inline" name="question_1_choice_<?php echo $index_c ?>_score" type="text" value="" />
-                  </fieldset>
-                  </div><!-- end div choice.item -->
-               <?php
-                  }
-               ?>
-            </div><!-- end div.choices -->
-         </div><!-- end div.question.item-->
-   
-         <a class="add" href="add">[ + ] <?php __("Add question") ?></a>
-         <a class="delete" href="delete">[ - ] <?php __("Delete question") ?></a>
-         <input type="hidden" name="number_of_questions" value="1">
-      </div><!-- end div .questions -->
-   
+      
+
+      <div class="questions_section">
+         <div class="question"></div>
+         <div class="controls">
+            <a class="add_question"    href="add_question"     onclick="add_question(this); return false;">[ + ] <?php __("Add question") ?></a>
+            <br />
+            <a class="delete_question" href="delete_question"  onclick="delete_question(this); return false;">[ - ] <?php __("Delete question") ?></a>
+            <input type="hidden" name="number_of_questions" value="0">
+         </div>
+      </div>
+
+
       <div class="rating">
          <h2><?php __("Rating grid") ?></h2>
          <?php
@@ -285,6 +277,7 @@ if(isset($_GET["questionnaire_id"])){
             <input type="radio" name="quest_type" value="normal" checked /> <?php __("normal") ?>
             <input type="radio" name="quest_type" value="360" /> <?php __("360") ?>
       </fieldset>
+      
 
       <div class="clear">
          <input name="submit" type="submit" value="<?php __("Send") ?> &raquo;" class="buton"/>

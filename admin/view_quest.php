@@ -30,27 +30,51 @@ if(isset($_GET["questionnaire_id"])){
 
       <p><strong><?php __("Questions") ?>:</strong></p>
       <ul>
+
+            <li class="head">
+               <ul class="grid">
+                  <li class="title"><?php __('Question') ?></li>
+                  <li class="question_type"><?php __('Question Type') ?></li>
+                  <li class="questionnaire_name"><?php __('Choices') ?></li>
+               </ul>
+            </li>
+
+
          <?php
             $result = get_questions_for_questionnaire($questionnaire_id);
             while ($row = mysql_fetch_array($result)) {
                   $question_id = $row["question_id"];
+                  $question_type = $row["type"];
                   $question_name = decode($row["name"], $lang);
             ?>
             <li>
-                  <p><strong><em><?php echo $question_name ?></em></strong></p>
-                  <p><em><?php __("Choices") ?>:</em></p>
-                  <ul>
+               <ul class="grid">
+
+                  <li class="title"><em><?php echo $question_name ?></em></li>
+                  <li class="question_type"><?php echo $question_type; ?></li>
+                  <li class="choices">
+                     <?php if($question_type == "choice"): ?>
                      <?php
                         $result_choice = get_choices_for_question($question_id);
-                        while ($row = mysql_fetch_array($result_choice)) {
-                           $choice_name = decode($row["name"], $lang);
-                           $choice_score = $row["score"];
-                     ?>
-                        <li><?php echo $choice_name . " / " . $choice_score ?></li>
-                     <?php
-                        }
-                     ?>
-                  </ul>
+                        $choice_count = mysql_num_rows($result_choice);
+                        if($choice_count > 0):  ?>
+                        <ul>
+                           <?php
+                                 while ($row = mysql_fetch_array($result_choice)) {
+                                 $choice_name = decode($row["name"], $lang);
+                                 $choice_score = $row["score"];
+                                 ?>
+                                 <li><?php echo $choice_score . " - " . $choice_name ?></li>
+                                 <?php
+                              }
+                           ?>
+                        </ul>
+                        <?php else: ?>
+                        <?php __('No choice has been defined yet') ?>
+                        <?php endif; ?>
+                     <?php endif; ?>
+                  </li>
+               </ul>
             </li>
             <?php
             }

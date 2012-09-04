@@ -20,47 +20,102 @@
 
 	if(isset($_POST["submit"])) {
 		unset($_POST["submit"]);
-		$post_subject_id = $_POST["subject_id"];
-		$post_study_id = $_POST["study_id"];
+		$subject_id = $_POST["subject_id"];
+		$study_id = $_POST["study_id"];
 		unset($_POST["subject_id"]);
 		unset($_POST["study_id"]);
-		
-		echo "<pre>";
-		var_dump($_POST);
-		echo "</pre>";
-		//exit;
-	
-		$response_id = MD5($study_id.$subject_id.time());
 
-		foreach($_POST as $question_id => $choice_id) {
+		
+		$response_id = MD5($study_id.$subject_id.time());
+//		$csv_output = fopen('csv/'.$response_id.'.csv', 'w'));
+
+			$data = array();
+
+			$data['subj_id']				= 'subj_id';
+			$data['response_id'] 		= 'response_id';
+			$data['study_id']				= 'study_id';
+			$data['questionnaire_id'] 	= 'questionnaire_id';
+			$data['question_id'] 		= 'question_id';
+			$data['question_name'] 		= 'question_name';
+			$data['question_type']		= 'question_type';
+			$data['choice_id'] 			= 'choice_id';
+			$data['score'] 				= 'score';
+			$data['data'] 					= 'data';
+//			fputcsv($csv_output, $data);
+
+		foreach($_POST as $question_id => $answer) {
 			
-			$check = "SELECT * FROM results WHERE study_id = ".$post_study_id." AND subj_id = ".$post_subject_id." AND question_id = ".$question_id;
+			$data = array();
+			$question_type = get_question_type($question_id);
+			$check = "SELECT * FROM results WHERE study_id = ".$study_id." AND subj_id = ".$subject_id." AND question_id = ".$question_id;
 			$result = mysql_query($check, $dbconnect);
 			
 			if(mysql_num_rows($result) == 0){
+
 				$questionnaire_id = get_questionnaire_for_question($question_id);
-				$query = "INSERT INTO results (`study_id`, `subj_id`, `questionnaire_id`, `question_id`, `choice_id`, `response_id`)
-								 VALUES ('".$post_study_id."', '".$post_subject_id."', '".$questionnaire_id."', '".$question_id."', '".$choice_id."', '".$response_id."') ";
-				$result = mysql_query($query, $dbconnect);
-				confirm_query($result);
-			} else {
+				
+				$data['subj_id']				= $subject_id;
+				$data['response_id'] 		= $response_id;
+				$data['study_id']				= $study_id;
+				$data['questionnaire_id'] 	= $questionnaire_id;
+				$data['question_id'] 		= $question_id;
+				$data['question_name'] 		= get_question_name($question_id, 'ro');
+				$data['question_type']		= $question_type;
+				$data['choice_id'] 			= null;
+				$data['score'] 				= null;
+				$data['data'] 					= null;
+				
+				if($question_type == 'choice') {
+					
+						$choice_name = get_choice_name($answer, 'ro');
+					
+	$query = "INSERT INTO results (`study_id`, `subj_id`, `questionnaire_id`, `question_id`, `choice_id`, `data`, `response_id`)
+					VALUES ('".$study_id."', '".$subject_id."', '".$questionnaire_id."', '".$question_id."', '".$answer."', '".$choice_name."' , '".$response_id."') ";
+						$result = mysql_query($query, $dbconnect);
+						confirm_query($result);
+						$data['choice_id'] = $answer;
+						$data['score'] = get_choice_score($answer);
+				} elseif($question_type == 'text') {
+						$query = "INSERT INTO results (`study_id`, `subj_id`, `questionnaire_id`, `question_id`, `data`, `response_id`)
+										VALUES ('".$study_id."', '".$subject_id."', '".$questionnaire_id."', '".$question_id."', '".mysql_real_escape_string(htmlspecialchars($answer))."', '".$response_id."') ";
+						$result = mysql_query($query, $dbconnect);
+						confirm_query($result);
+						$data['data'] = $answer;
+				}
+
+//				fputcsv($csv_output, $data);
 			}
 		}
-	   //redirect("admin/view_subject.php?subj_id=".$post_subject_id);
+		?>
+		<p><strong>Raspunsurile au fost salvate!</strong></p>
+		<p><em>Multumim pentru participare.</em></p>
+		
+		<p>Inapoi la <a href="index.php">prescriptiveindex.ro</a>
+		<?php
+//		fclose($csv_output);
+		die();
 	}
+?>
 
 
+<?php
 	if(isset($_GET["subj"])) {
 		$subject_id = $_GET["subj"];
 	} else {
 		redirect("index.php");
 	}
-
+	
 	if(isset($_GET["study"])) {
 		$study_id = $_GET["study"];
 	} else {
 		redirect("index.php");
 	}
+
+   $result = get_study($study_id);
+   $row = mysql_fetch_array($result);
+		$study_name = decode($row["name"], $lang);
+		$study_desc = decode($row["desc"], $lang);
+
 
 	$result = get_quest_for_study($study_id);
 	while ($row = mysql_fetch_array($result)) {
@@ -71,16 +126,6 @@
 
 <div id="wrapper">
 	
-	
-<!--<div style="width:200px; height:200px; background:#ccc;">
-	<div style="float:left;vertical-align:middle; background:#FB0000; width:50%; height:50px;">
-		<input style="margin:0; padding:0" type="radio" name="pic" value="1"/>
-	</div>
-</div>
--->
-
-	
-
 	<div id="main_content">
 		<p class="title">Prescriptive Index</p>
 
@@ -88,58 +133,65 @@
 			<form id="" action="fill.php" method="post">
 				<input type="hidden" name="subject_id" value="<?php echo $subject_id ?>" />
 				<input type="hidden" name="study_id" value="<?php echo $study_id ?>" />
+				
+				<h2><?php echo $study_name ?></h2>
+				<p><strong><?php __('Description') ?>: </strong><?php echo $study_desc ?></p>
 			 
 				<?php
 					foreach($questionnaire_ids as $questionnaire_id) :
 					
 						$result = get_questionnaire($questionnaire_id);
 						$row = mysql_fetch_array($result);
-							$questionnaire_id = $row["questionnaire_id"];
-							$questionnaire_name = decode($row["name"], $lang);
-							$questionnaire_desc = decode($row["desc"], $lang);
-							$display_type = $row["display_type"];
-							$quest_type = $row["quest_type"];
-							$max_score = $row["max_score"];
+							$questionnaire_id = $row['questionnaire_id'];
+							$questionnaire_name = decode($row['name'], $lang);
+							$questionnaire_desc = decode($row['desc'], $lang);
+							$display_type = $row['display_type'];
+							$quest_type = $row['quest_type'];
+							$max_score = $row['max_score'];
 							$result = get_questions_for_questionnaire($questionnaire_id);
 							$question_count = mysql_num_rows($result);
 				?>
-						<h2><strong><?php echo $questionnaire_name ?></strong></h2>
+						<h3><strong><?php echo $questionnaire_name ?></strong></h3>
 						<div class="desc" style="margin-bottom:20px;">
 							<?php echo nl2br($questionnaire_desc, false) ?>
 						</div>
 
-
-						
-						<?php if ($display_type == "normal"): ?>
+						<?php if ($display_type == 'normal'): ?>
 						<div class="questionnaire">
-							<ul>
+							<ul class="question fill">
 								<?php
 								while ($row = mysql_fetch_array($result)) {
-									$question_id = $row["question_id"];
-									$question_name = decode($row["name"], $lang);
+									$question_id = $row['question_id'];
+									$question_type = $row['type'];
+									$question_name = decode($row['name'], $lang);
 								?>
 								<li>
 									<p><strong><em><?php echo html_entity_decode($question_name) ?></em></strong></p>
+									<ul class="answer fill">
 									<?php
-										$result_choice = get_choices_for_question($question_id);
-										while ($row = mysql_fetch_array($result_choice)) {
-											$choice_name = decode($row["name"], $lang);
-											$choice_score = $row["score"];
-											if (empty($choice_name) || $choice_name == '-')
-												continue;
-									?>
-									<input type="radio" name="<?php echo $question_id ?>" value="<?php echo $choice_score ?>" />&nbsp;<?php echo $choice_name ?><br />
-									<?php
+										if($question_type == 'choice') {
+											$result_choice = get_choices_for_question($question_id);
+											while ($row = mysql_fetch_array($result_choice)) {
+												$choice_name = decode($row['name'], $lang);
+												//$choice_score = $row['score'];
+												$choice_id = $row['choice_id'];
+												if (empty($choice_name) || $choice_name == '-') {
+													continue;
+												} else {
+													echo '<li><input type="radio" name="'.$question_id.'" value="'.$choice_id.'" /><span class="text">'.$choice_name.'</span></li>';
+												}
+											}
+										} elseif ($question_type == 'text') {
+											echo '<li><input type="text" name="'.$question_id.'" /></li>';
 										}
 									?>
+									</ul>
 								</li>
 								<?php
 								}
 								?>
 							</ul>
 						<?php endif; ?>
-
-
 
 						<?php if ($display_type == "radial"): ?>
 						<div class="questionnaire" style="background:#F3F3F3; position:relative; height:800px;">
@@ -170,6 +222,7 @@
 	while ($row = mysql_fetch_array($result_choice)):
 		$choice_name = decode($row["name"], $lang);
 		$choice_score = $row["score"];
+		$choice_id = $row["choice_id"];
 		$x = $xoffset + round(cos(($angle+90+$angle_radius/2) * M_PI / 180) * $steps[$i]);
 		$y = $yoffset + round(sin(($angle+90+$angle_radius/2) * M_PI / 180) * $steps[$i]);
 		$size = 20+5*$i;
@@ -192,7 +245,7 @@
 			left:<?php echo 3 + 5*$i/2 ?>px;
 			
 		
-		" name="<?php echo $question_id ?>" value="<?php echo $choice_score ?>" />
+		" name="<?php echo $question_id ?>" value="<?php echo $choice_id ?>" />
 		</div>
 	<?php
 	$x_sprite = $x_sprite - 20 - 5*$i;

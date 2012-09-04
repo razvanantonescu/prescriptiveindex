@@ -101,7 +101,6 @@ $scala_1 = array(
 );
 
 //! Answers for "Satisfactie Maritala" section
-
 $sm_a1 = array(
   '1 foarte insatisfacut',
   2,
@@ -176,7 +175,7 @@ $scala_4_a2 = array(
 );
 //! Questions & answers for 7th section: Scala 4
 $scala_4 = array(
-  'Oferi atentie parfumului, deodorantului sau afteshave-ului pe care le folosesc alte persoane?' => $scala_4_a1,
+  '1. Oferi atentie parfumului, deodorantului sau afteshave-ului pe care le folosesc alte persoane?' => $scala_4_a1,
   'Cat de important este pentru tine ca partenerul tau/partenera ta sa miroasa placut?' => $scala_4_a2,
   'Simti mirosul de transpiratie al altor oameni?' => $scala_4_a1,
   'Cand o persoana are un miros al corpului placut, aceasta te face sa o gasesti ca fiind neatractiva? Mirosul corpului are........' => $scala_4_a2,
@@ -194,18 +193,10 @@ $scala_4 = array(
 /**
  * The 3 slides from the 8th section
  */
-//$sliders = array(
-//  'Imaginati-va ca sunteti persoana A (stanga). Persoana B se apropie de dvs. Daca este un strain, cat de mult se poate apropia de dvs. pentru a va simti confortabil in conversatie? Va rugam sa indicati pe scala de mai jos.' => 'slider',
-//  'Imaginati-va ca sunteti persoana A (stanga). Persoana B se apropie de dvs. Daca este o cunostinta (nu foarte apropiata), cat de mult se poate apropia de dvs. pentru a va simti confortabil in conversatie? Va rugam sa indicati pe scala de mai jos.' => 'slider',
-//  'Imaginati-va ca sunteti persoana A (stanga). Persoana B se apropie de dvs. Daca este o persoana apropiata (un prieten sau ruda), cat de mult se poate apropia de dvs. pentru a va simti confortabil in conversatie? Va rugam sa indicati pe scala de mai jos.' => 'slider',
-//);
-
-$scala_5_a1 = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10 );
-
-$scala_5 = array(
-  'Imaginati-va ca sunteti persoana A (stanga). Persoana B se apropie de dvs. Daca este un strain, cat de mult se poate apropia de dvs. pentru a va simti confortabil in conversatie? Va rugam sa indicati pe scala de mai jos.' => $scala_5_a1,
-  'Imaginati-va ca sunteti persoana A (stanga). Persoana B se apropie de dvs. Daca este o cunostinta (nu foarte apropiata), cat de mult se poate apropia de dvs. pentru a va simti confortabil in conversatie? Va rugam sa indicati pe scala de mai jos.' => $scala_5_a1,
-  'Imaginati-va ca sunteti persoana A (stanga). Persoana B se apropie de dvs. Daca este o persoana apropiata (un prieten sau ruda), cat de mult se poate apropia de dvs. pentru a va simti confortabil in conversatie? Va rugam sa indicati pe scala de mai jos.' => $scala_5_a1,
+$sliders = array(
+  'Imaginati-va ca sunteti persoana A (stanga). Persoana B se apropie de dvs. Daca este un strain, cat de mult se poate apropia de dvs. pentru a va simti confortabil in conversatie? Va rugam sa indicati pe scala de mai jos.' => 'slider',
+  'Imaginati-va ca sunteti persoana A (stanga). Persoana B se apropie de dvs. Daca este o cunostinta (nu foarte apropiata), cat de mult se poate apropia de dvs. pentru a va simti confortabil in conversatie? Va rugam sa indicati pe scala de mai jos.' => 'slider',
+  'Imaginati-va ca sunteti persoana A (stanga). Persoana B se apropie de dvs. Daca este o persoana apropiata (un prieten sau ruda), cat de mult se poate apropia de dvs. pentru a va simti confortabil in conversatie? Va rugam sa indicati pe scala de mai jos.' => 'slider',
 );
 
 /**
@@ -222,10 +213,9 @@ $data = array(
   'Scala 2' => $scala_2,
   'Scala 3' => $scala_3,
   'Scala 4' => $scala_4,
-  'Scala 5' => $scala_5
+  '' => $sliders
 );
 ?>
-
 <form name='marital_satisfaction' method='post' action='marital_satisfaction_submit.php'>
 <?
 /**
@@ -235,61 +225,54 @@ $data = array(
   foreach ($data as $idata => $vdata)
   {
     echo "<h3 style='padding-top:20px'>$idata</h3><ul>";
-
-        if ($vdata == $scala_5) {
-               foreach ($vdata as $question => $answer) {
-                        if ($question == '__INFO__') {
-                                echo "<p><em>$answer</em></p>";
-                                continue;
-                        }
-                        $i++;
-                        echo "<li>";
-                        echo "<p>$question</p>";
-                        ?>
-                        <table>
-                                <tr>
-                                        <td><img src='images/human_l.png'><h1>A</h1></td>
-                                        <td width='630'><div style='margin-top:100px'>
-                                        <div>
-                                            <?php
-                                                    foreach ($answer as $aid => $avalue) {
-                                                            echo "<input type='radio' style='width: 13px; height:13px; margin:0 0 0 45px; ' name='a$i' value='$avalue'>";
-                                                    }
-                                            ?>
-                                        </div>
-                                        </div></td>
-                                        <td><img src='images/human_r.png'><h1>B</h2></td>
-                                </tr>
-                        </table>
-                        <?php
-                        echo "</li>";
-                } 
-
-        } else {
-                foreach ($vdata as $question => $answer) {
-                        if ($question == '__INFO__') {
-                                echo "<p><em>$answer</em></p>";
-                                continue;
-                        }
-                        $i++;
-                        echo "<li>";
-                        echo "<p>$question</p>";
-                        if (is_array($answer)) {
-                                foreach ($answer as $aid => $avalue) {
-                                        echo "<input type='radio' name='a$i' value='$avalue'> $avalue<br>";
-                                }
-                        } else if ($answer == 'text'){
-                                echo "<input type='text' name='a$i'";
-                        }
-                        echo "</li>";
-                }
+    foreach ($vdata as $question => $answer)
+    {
+      if ($question == '__INFO__')
+      {
+        echo "<p><em>$answer</em></p>";
+        continue;
+      }
+      $i++;
+      echo "<li>";
+      echo "<p>$question</p>";
+      if (is_array($answer))
+      {
+        foreach ($answer as $aid => $avalue)
+        {
+          echo "<input type='radio' name='a$i' value='$avalue'> $avalue<br>";
         }
-        echo "</ul>";
+      }
+      else
+      {
+         if ($answer == 'text')
+           echo "<input type='text' name='a$i'";
+         if ($answer == 'slider')
+         {
+           $sldid = "s$i";
+?>
+  <input type='hidden' name='a<?=$i?>' id='a<?=$i?>'>
+  <table>
+    <tr>
+      <td><img src='images/humanr.png'><h1>A</h1></td>
+      <td width='630'><div style='margin-top:100px'><div id="<?=$sldid?>"></div></div></td>
+      <td><img src='images/humanl.png'><h1>B</h2></td>
+    </tr>
+  </table>
+  <script>
+    var <?=$sldid?> = new dhtmlxSlider('<?=$sldid?>', { size:600, skin: "ball", vertical:false, step:1, min:1, max:11, value:1});
+    <?=$sldid?>.linkTo(a<?=$i?>);
+    <?=$sldid?>.init();
+  </script>
+<?           
+         }
+     }
+      echo "</li>";
+    }
+    echo "</ul>";
   }
 ?>
-<input type='submit' value='trimite'>
+  <input type='submit' value='trimite'>
 </form>
-
 
       </div>
     </div>

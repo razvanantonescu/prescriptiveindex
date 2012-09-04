@@ -10,6 +10,7 @@ if(isset($_GET["subj_id"])){
       $subj_first_name = $row["first_name"];
       $subj_last_name = $row["last_name"];
       $subj_gender = $row["gender"];
+      $subj_bdate = $row["birth_date"];
       $subj_email = $row["email"];
       $subj_tested = $row["tested"];
       $subj_status = $row["status"];
@@ -23,6 +24,7 @@ if(isset($_GET["subj_id"])){
       <p><strong><?php __("First Name") ?>:</strong> <?php echo $subj_first_name ?></p>
       <p><strong><?php __("Last Name") ?>:</strong> <?php echo $subj_last_name ?></p>
       <p><strong><?php __("Gender") ?>:</strong> <?php echo $subj_gender ?></p>
+      <p><strong><?php __("Date of Birth") ?>:</strong> <?php echo $subj_bdate ?></p>
       <p><strong><?php __("Email") ?>:</strong> <?php echo $subj_email ?></p>
       <p><strong><?php __("Tested") ?>:</strong> <?php if($subj_tested == '1'){__("tested");} else {__("not tested");} ?></p>
       <p><strong><?php __("Status") ?>:</strong> <?php if($subj_status == 'a'){__("aproved");} else {__("pending");} ?></p>
@@ -61,12 +63,12 @@ if(isset($_GET["subj_id"])){
 	    ?>
 				<li>
 				 <a href="view_study.php?study_id=<?php echo $study_id ?>"><?php echo $study_name ?></a> - 
-				 <a href="view_results.php?study_id=<?php echo $study_id ?>&subj_id=<?php echo $subj_id ?>">rezultate</a>
+				 <a href="view_results.php?study_id=<?php echo $study_id ?>&subj_id=<?php echo $subj_id ?>"><?php __('rezultate') ?></a>
 				</li>
 	    <?php
 			}
 		  } else {
-			echo "<li>nu a participat încă la nici un studiu</li>";
+			__('nu a participat încă la nici un studiu') ;
 		  }
          ?>
       </ul>

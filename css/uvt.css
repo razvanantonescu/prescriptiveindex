@@ -87,7 +87,7 @@ h1.info.active-toggle {
 }
 
 #info {
-   //border-bottom:1px solid #ADB7BF;
+   border-bottom:1px solid #ADB7BF;
    
 }
 
@@ -96,17 +96,7 @@ h1.info.active-toggle {
    margin-bottom:20px;
 }
 
-
-
-
-
-
-
-
 #main_content {display:block; /*background:#fafcfd; */margin: 20px 45px 30px; padding:30px;}
-
-
-
 
 #footer {border-top:2px solid #ADB7BF; clear:both; padding:10px 35px; color:#ADB7BF; overflow:hidden;}
 #footer a {text-decoration:none; color: #ADB7BF; padding-right:5px; border-right:1px solid #ADB7BF}
@@ -114,29 +104,43 @@ h1.info.active-toggle {
 #footer #copyright {float:right;}
 
 
-
 #list_details {margin-bottom:10px;}
 #list_details ul{/*border:1px solid #ADB7BF*/ }
-#list_details li {clear:both; display:block; overflow:hidden; padding:8px 15px; background:#f3f3f3; margin-bottom:1px}
+#list_details li {clear:both; display:block; overflow:hidden; padding:6px 15px; background:#f3f3f3; margin-bottom:1px}
 /*#list_details li:nth-child(2n+1) {background:#f3f3f3;}
 #list_details li:nth-child(2n) {background:#f9f9f9;}*/
-#list_details li.head{font-weight:bold; font-size:13px; background:none}
-#list_details li span{display:block; float:left; width:70px;}
-#list_details .edit, #list_details .view {float:right; text-align:center; width:50px;}
-#list_details .name{width:220px;}
+#list_details li.head{font-weight:bold;}
+
+#list_details ul.grid li { float:left; clear:none; padding:0; width:100px; padding:0 5px; }
+#list_details ul.grid li.title { width:300px;}
+#list_details ul.grid li.questionnaire_name { width:130px;}
+#list_details ul.grid li.question_type { width:80px;}
+#list_details ul.grid li.answer { width:220px;}
+#list_details ul.grid li.choices { width:410px;}
+#list_details ul.grid li.choices li { float:none; width: auto;}
+#list_details ul.grid li.score { width:40px;}
+
+
+#list_details span {width: 70px; display: inline-block; }
+#list_details li span.name,
+#list_details li span.description {display:block; float:left;}
+#list_details li span.name{width:220px;}
+#list_details li span.description{width:410px;}
+#list_details .edit,
+#list_details .view {float:right; text-align:center; width:50px;}
 #list_details .first_name{width:180px;}
 #list_details .last_name{width:180px;}
 #list_details .status{width:85px;}
 #list_details .email{width:180px;}
-#list_details .description{width:410px;}
 #list_details ul {margin-bottom:20px;}
+
 
 
 form {}
 
 fieldset {margin-bottom:10px;}
-form .ro {float:left; width:48%;}
-form .en {float:right; width:48%;}
+.ro {float:left; width:48%;}
+.en {float:right; width:48%;}
 
 label {display:block; margin-bottom:5px; font-weight:bold;}
 
@@ -160,7 +164,9 @@ input[type="radio"] {margin:0; padding:0}
 
 .subquest {/*background:#E6ECFF; padding: 20px; */margin-bottom:30px; clear:both; overflow:hidden}
 /*.subquest .item {padding: 10px 10px 0; background:#CCCCCC; margin-bottom:10px; clear:both; overflow:hidden}*/
-.question {margin-bottom:20px; clear:both; overflow:hidden;}
+
+.questions_section { margin-bottom:20px; /*background: #FB0; padding: 20px;*/ }
+.question {/*margin-bottom:20px; */clear:both; overflow:hidden;}
 .question.item {/*padding: 10px 10px 0;*/ /*background:#E6ECFF; */  padding:20px 20px 10px; margin-bottom:20px; clear:both; overflow:hidden; background:#F9F9F9; }
 .choice {clear:both; overflow:hidden;}
 .choice.item {padding: 10px 10px 0; background:#FFFFFF; margin-bottom:0px; clear:both; overflow:hidden; margin-bottom:10px;}
@@ -182,4 +188,58 @@ form .required.error {border: 1px solid #FB0000; background:#FFEBF3}
 .questionnaire .label{
 	margin-bottom:20px;
 	font-weight:bold;
+}
+
+
+#list_details .questionnaire .answer.fill {
+	margin: 0;
+}
+
+#list_details .questionnaire .answer.fill li {
+	margin: 0 0 1px 0;
+	padding: 0;
+	height:23px; line-height:23px;
+}
+
+#list_details .questionnaire .answer.fill li input[type="radio"]{
+	margin:5px;
+	height:13px;
+	width:13px;
+}
+
+#list_details .questionnaire .answer.fill li span{
+	background: none;
+	margin: 0;
+	padding: 0;
+	width: auto;
+}
+
+#list_details .questionnaire .answer.fill li span.text{
+	margin:0px;
+	padding:0px;
+	display:inline-block;
+	height:23px;
+	line-height:23px;
+}
+
+
+
+a.download {
+	background:url(../images/csv_export.png) left center no-repeat;
+	height:30px;
+	line-height:30px;
+	padding-left: 30px;
+	display: inline-block;
+	text-decoration:none;
+}
+
+a.download:hover {
+	text-decoration:underline;
+}
+
+
+.controls {
+	/*display:none;*/
+/*	padding:10px;
+	background:#FB0;*/
 }

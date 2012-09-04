@@ -19,8 +19,6 @@ foreach($_POST as $key=>$value) {
 }
 ?>
 
-
-
 <form id="translate" method="post" action="translate.php">
 
 <?php

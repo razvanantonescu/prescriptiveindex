@@ -51,11 +51,12 @@ if(isset($_GET["list_id"])){
       <p><a href="procesare_liste.php?list_id=<?php echo $list_id ?>&action=delete"><?php __("Delete list") ?></a></p>
 
       <form action="import_subjects.php" method="post" enctype="multipart/form-data">
-         <label for="file">Import subjects from csv file:</label>
+         <label for="file"><?php __('Import subjects from csv file') ?>*</label>
          <input type="hidden" name="list_id" value="<?php echo $list_id ?>" />
          <input type="file" name="file" id="file" />
          <input type="submit" name="submit" value="<?php __("Import subjects") ?>"/>
       </form>
+      <p>* <?php __('Subjects will be automatically included in this list') ?></p>
 
 
 

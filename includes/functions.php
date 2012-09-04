@@ -28,17 +28,17 @@ function output_message() {
       $mesaj = $_SESSION["mesaj"];
       foreach ($mesaj as $mess) {
          echo "<p class=\"mesaj\">";
-	    //__(stripslashes($mess));
 	    echo stripslashes($mess);
 	    echo "</p>";
       }
       unset($_SESSION["mesaj"]);
-   }
+	}
 }
 
 function get_language () {
    if(isset($_SESSION["lang"]) && $_SESSION["lang"]!="") {
       $lang = $_SESSION["lang"];
+		setcookie('lang', '$lang');
       return $lang;
    } else {
       return false;
@@ -310,9 +310,26 @@ function get_rel_questions_for_questionnaire($questionnaire_id) {
 }
 
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function get_rel_choices_for_question($question_id) {
+   global $dbconnect;
+   $query = "SELECT choice_id FROM choices WHERE question_id = '".$question_id."' ";
+   $result = mysql_query($query, $dbconnect);
+   confirm_query($result);
+   $return = array();
+   while ($row = mysql_fetch_array($result)) {
+      $return[] = $row["choice_id"];
+   }
+   return $return;
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 function get_questions_for_questionnaire($questionnaire_id) {
    global $dbconnect;
-   $query = "SELECT question_id, name FROM questions WHERE questionnaire_id = '".$questionnaire_id."' ORDER BY question_id ASC;";
+   $query = "SELECT question_id, name, type FROM questions WHERE questionnaire_id = '".$questionnaire_id."' ORDER BY question_id ASC;";
    $result = mysql_query($query, $dbconnect);
    confirm_query($result);
    return $result;
@@ -327,6 +344,27 @@ function get_choices_for_question($question_id) {
    confirm_query($result);
    return $result;
 }
+
+function get_choice_name($choice_id, $lang) {
+   global $dbconnect;
+   $query = "SELECT name FROM choices WHERE choice_id={$choice_id}";
+   $result = mysql_query($query, $dbconnect);
+   confirm_query($result);
+   $row = mysql_fetch_array($result);
+   $choice_name = decode($row["name"], $lang);
+   return $choice_name;
+}
+
+function get_choice_score($choice_id) {
+   global $dbconnect;
+   $query = "SELECT score FROM choices WHERE choice_id={$choice_id}";
+   $result = mysql_query($query, $dbconnect);
+   confirm_query($result);
+   $row = mysql_fetch_array($result);
+   $choice_score = $row["score"];
+   return $choice_score;
+}
+
 
 function get_questionnaire_for_question($question_id) {
    global $dbconnect;
@@ -447,13 +485,21 @@ function get_quest_for_study($study_id) {
 
 function get_list_for_study($study_id) {
    global $dbconnect;
-   $query = "SELECT rel_list_study.list_id, rel_list_study.study_id, liste.name FROM rel_list_study, liste WHERE rel_list_study.study_id = {$study_id} AND liste.list_id = rel_list_study.list_id";
+   $query = "SELECT rel_list_study.list_id, rel_list_study.study_id, liste.name FROM rel_list_study, liste WHERE rel_list_study.study_id={$study_id} AND liste.list_id = rel_list_study.list_id";
    $result = mysql_query($query, $dbconnect);
    confirm_query($result);
    return $result;
 }
 
-
+function get_question_type ($question_id){
+	global $dbconnect;
+	$query = "SELECT type from questions WHERE question_id={$question_id}";
+   $result = mysql_query($query, $dbconnect);
+   confirm_query($result);
+   $row = mysql_fetch_array($result);
+	$type = $row["type"];
+   return $type;
+}
 
 
 
