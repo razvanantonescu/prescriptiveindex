@@ -200,7 +200,7 @@ $scala_4 = array(
 //  'Imaginati-va ca sunteti persoana A (stanga). Persoana B se apropie de dvs. Daca este o persoana apropiata (un prieten sau ruda), cat de mult se poate apropia de dvs. pentru a va simti confortabil in conversatie? Va rugam sa indicati pe scala de mai jos.' => 'slider',
 //);
 
-$scala_5_a1 = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10 );
+$scala_5_a1 = array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,);
 
 $scala_5 = array(
   'Imaginati-va ca sunteti persoana A (stanga). Persoana B se apropie de dvs. Daca este un strain, cat de mult se poate apropia de dvs. pentru a va simti confortabil in conversatie? Va rugam sa indicati pe scala de mai jos.' => $scala_5_a1,
@@ -246,21 +246,22 @@ $data = array(
                         echo "<li>";
                         echo "<p>$question</p>";
                         ?>
-                        <table>
-                                <tr>
-                                        <td><img src='images/human_l.png'><h1>A</h1></td>
-                                        <td width='630'><div style='margin-top:100px'>
-                                        <div>
+                        <style type="text/css">
+                          #scala {
+                            background: url('images/marital.png') no-repeat;
+                            width:448px;
+                            height:31px;
+                            padding-top:240px;
+                            padding-left:35px;
+                          }
+                        </style>
+                        <div id='scala'>
                                             <?php
                                                     foreach ($answer as $aid => $avalue) {
-                                                            echo "<input type='radio' style='width: 13px; height:13px; margin:0 0 0 45px; ' name='a$i' value='$avalue'>";
+                                                            echo "<input type='radio' style='width: 13px; height:13px; margin:0 0 0 19.2px; ' name='a$i' value='$avalue'>";
                                                     }
                                             ?>
-                                        </div>
-                                        </div></td>
-                                        <td><img src='images/human_r.png'><h1>B</h2></td>
-                                </tr>
-                        </table>
+                        </div>
                         <?php
                         echo "</li>";
                 } 
