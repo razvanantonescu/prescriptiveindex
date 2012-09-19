@@ -75,7 +75,7 @@ if(isset($_GET["study_id"])){
                $result = mysql_query($check, $dbconnect);
                   if(mysql_num_rows($result) == 0){
       ?>
-                     <a href="../fill.php?subj=<?php echo $subj_id ?>&study=<?php echo $study_id ?>"><?php __("[completeaza]") ?> </a>
+                  <a href="../fill.php?data=<?php echo base64_encode(implode(',', array($study_id, $subj_id))) ?>"><?php __("[completeaza]") ?> </a>
       <?php
                   }
       ?>
@@ -85,6 +85,22 @@ if(isset($_GET["study_id"])){
          }
       ?>
       </ul>
+
+      <p><?php __("The following email template is used") ?>:</p>
+      <ul>
+         <?php
+            $rel_template = get_rel_template_id_for_study($study_id);
+            if($rel_template != null) {
+         ?>
+         <li>
+            <a href="view_email.php?email_id=<?php echo $rel_template ?>"><?php echo get_template_name($rel_template, $lang) ?></a>
+         </li>
+         <?php
+            }
+         ?>
+
+      </ul>
+
 
       <p><a href="edit_study.php?study_id=<?php echo $study_id ?>"><?php __("Edit study") ?></a></p>
 

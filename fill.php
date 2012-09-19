@@ -18,13 +18,25 @@
 
 <?php
 
+	
+	// procesare chestionare trimise
+
 	if(isset($_POST["submit"])) {
 		unset($_POST["submit"]);
 		$subject_id = $_POST["subject_id"];
 		$study_id = $_POST["study_id"];
 		unset($_POST["subject_id"]);
 		unset($_POST["study_id"]);
-
+		
+		$tester = subject_completed_study($subject_id, $study_id);
+		
+		if($tester == true) {
+			?>
+				<p>Ai completat deja acest studiu</p>
+				<a href="index.php">Inapoi</a>
+			<?php
+			die;
+		}
 		
 		$response_id = MD5($study_id.$subject_id.time());
 //		$csv_output = fopen('csv/'.$response_id.'.csv', 'w'));
@@ -67,20 +79,20 @@
 				
 				if($question_type == 'choice') {
 					
-						$choice_name = get_choice_name($answer, 'ro');
-					
-	$query = "INSERT INTO results (`study_id`, `subj_id`, `questionnaire_id`, `question_id`, `choice_id`, `data`, `response_id`)
-					VALUES ('".$study_id."', '".$subject_id."', '".$questionnaire_id."', '".$question_id."', '".$answer."', '".$choice_name."' , '".$response_id."') ";
-						$result = mysql_query($query, $dbconnect);
-						confirm_query($result);
-						$data['choice_id'] = $answer;
-						$data['score'] = get_choice_score($answer);
-				} elseif($question_type == 'text') {
-						$query = "INSERT INTO results (`study_id`, `subj_id`, `questionnaire_id`, `question_id`, `data`, `response_id`)
-										VALUES ('".$study_id."', '".$subject_id."', '".$questionnaire_id."', '".$question_id."', '".mysql_real_escape_string(htmlspecialchars($answer))."', '".$response_id."') ";
-						$result = mysql_query($query, $dbconnect);
-						confirm_query($result);
-						$data['data'] = $answer;
+					$choice_name = get_choice_name($answer, 'ro');
+				
+					$query = "INSERT INTO results (`study_id`, `subj_id`, `questionnaire_id`, `question_id`, `choice_id`, `data`, `response_id`)
+								VALUES ('".$study_id."', '".$subject_id."', '".$questionnaire_id."', '".$question_id."', '".$answer."', '".$choice_name."' , '".$response_id."') ";
+					$result = mysql_query($query, $dbconnect);
+					confirm_query($result);
+					$data['choice_id'] = $answer;
+					$data['score'] = get_choice_score($answer);
+			} elseif($question_type == 'text') {
+					$query = "INSERT INTO results (`study_id`, `subj_id`, `questionnaire_id`, `question_id`, `data`, `response_id`)
+									VALUES ('".$study_id."', '".$subject_id."', '".$questionnaire_id."', '".$question_id."', '".mysql_real_escape_string(htmlspecialchars($answer))."', '".$response_id."') ";
+					$result = mysql_query($query, $dbconnect);
+					confirm_query($result);
+					$data['data'] = $answer;
 				}
 
 //				fputcsv($csv_output, $data);
@@ -97,20 +109,15 @@
 	}
 ?>
 
-
 <?php
-	if(isset($_GET["subj"])) {
-		$subject_id = $_GET["subj"];
+	if(isset($_GET['data'])) {
+		$data = explode(',', base64_decode($_GET['data']));
+		$subject_id = $data[1];
+		$study_id = $data[0];
 	} else {
 		redirect("index.php");
 	}
 	
-	if(isset($_GET["study"])) {
-		$study_id = $_GET["study"];
-	} else {
-		redirect("index.php");
-	}
-
    $result = get_study($study_id);
    $row = mysql_fetch_array($result);
 		$study_name = decode($row["name"], $lang);
@@ -123,14 +130,13 @@
 	}
   ?>
 
-
 <div id="wrapper">
 	
 	<div id="main_content">
 		<p class="title">Prescriptive Index</p>
 
 		<div id="list_details" style="margin-top:30px;">
-			<form id="" action="fill.php" method="post">
+			<form id="fill" action="fill.php" method="post">
 				<input type="hidden" name="subject_id" value="<?php echo $subject_id ?>" />
 				<input type="hidden" name="study_id" value="<?php echo $study_id ?>" />
 				

@@ -75,6 +75,23 @@ if(isset($_GET["study_id"])){ /////////////////////////////// EDIT STUDY
             }
          ?>
       </fieldset>
+
+      <fieldset>
+         <label for="email_template"><?php __("Use as email template") ?>:</label>
+            <?php
+         		$rel_template = get_rel_template_id_for_study($study_id);
+               $all_templates = get_all_templates();
+
+               while ($row = mysql_fetch_array($all_templates)) {
+                  $template_id = $row["email_id"];
+                  $template_name = decode($row["name"], $lang);
+            ?>
+<input type="radio" name="email_template" value="<?php echo $template_id; ?>" <?php if($rel_template == $template_id) echo "checked" ?> /><?php echo $template_name ?><br />
+            <?php 
+               }
+            ?>
+      </fieldset>
+
       <div class="clear">
          <input name="submit" type="submit" value="<?php __("Save") ?>  &raquo;" class="buton"/>
       </div>
@@ -138,6 +155,21 @@ if(isset($_GET["study_id"])){ /////////////////////////////// EDIT STUDY
             }
          ?>
       </fieldset>
+
+      <fieldset>
+         <label for="email_template"><?php __("Use as email template") ?>:</label>
+            <?php
+               $all_templates = get_all_templates();
+               while ($row = mysql_fetch_array($all_templates)) {
+                  $template_id = $row["email_id"];
+                  $template_name = decode($row["name"], $lang);
+            ?>
+            <input type="radio" name="email_template" value="<?php echo $template_id; ?>" /><?php echo $template_name ?><br />
+            <?php 
+               }
+            ?>
+      </fieldset>
+
       <div class="clear">
          <input name="submit" type="submit" value="<?php __("Send") ?>  &raquo;" class="buton"/>
       </div>

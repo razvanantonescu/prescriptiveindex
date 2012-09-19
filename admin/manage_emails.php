@@ -11,7 +11,7 @@
                   <span class="body"><?php __("Body") ?></span>
                </li>
          <?php          
-            $result = get_all_emails ();
+            $result = get_all_templates ();
 
             while ($row = mysql_fetch_array($result)) {
                $email_id = $row["email_id"];

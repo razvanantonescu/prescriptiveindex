@@ -52,8 +52,8 @@
 			</select>
 	
 			<!--<select class="values" id="status" name="status" disabled="disabled" style="display:none">
-				<option value="p">pending</option>
-				<option value="a">active</option>
+				<option value="0">pending</option>
+				<option value="1">active</option>
 			</select>-->
 	
 			<input name="submit" type="submit" value="<?php __("Filter subjects") ?> &raquo;" class="buton"/>

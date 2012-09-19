@@ -44,22 +44,6 @@ if(isset($_GET["email_id"])){ /////////////////////////////// EDIT email
          </div>
       </fieldset>
 
-      <fieldset>
-         <label for="studies"><?php __("Studies related to this email") ?>:</label>
-         <?php
-            $rel_studies = get_rel_studies_for_email($email_id);
-            $all_studies = get_all_studies();
-        
-            while ($row = mysql_fetch_array($all_studies)) {
-               $study_id = $row["study_id"];
-               $study_name = decode($row["name"], $lang);
-         ?>
-            <input type="checkbox" <?php if (in_array($study_id, $rel_studies)) {echo "checked=\"checked\"" ; } ?> name="studies[]" value="<?php echo $study_id ?> " /> <?php echo $study_name ?><br />
-         <?php 
-            }
-         ?>
-      </fieldset>
-
       <div class="clear">
          <input name="submit" type="submit" value="<?php __("Save") ?>  &raquo;" class="buton"/>
       </div>
@@ -94,20 +78,6 @@ if(isset($_GET["email_id"])){ /////////////////////////////// EDIT email
             <label for="email_body"><?php __("Body (en)") ?></label>
             <textarea class="required" name="email_body_en"></textarea>
          </div>
-      </fieldset>
-
-      <fieldset>
-         <label for="studies"><?php __("Studies related to this email") ?>:</label>
-         <?php
-            $result = get_all_studies ();
-            while ($row = mysql_fetch_array($result)) {
-               $study_id = $row["study_id"];
-               $study_name = decode($row["name"], $lang);
-            ?>
-            <input type="checkbox" name="studies[]" value="<?php echo $study_id ?> " /> <?php echo $study_name ?><br />
-         <?php 
-         }
-         ?>
       </fieldset>
 
       <div class="clear">

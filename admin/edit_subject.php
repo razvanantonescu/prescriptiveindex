@@ -37,8 +37,8 @@ if(isset($_GET["subj_id"])){
             </select>
             <label for="subj_status"><?php __("Status") ?>:</label>
             <select name="subj_status">
-               <option value="p" <?php if($subj_status == "p") { ?> selected="selected" <?php } ?> ><?php __("pending") ?></option>
-               <option value="a" <?php if($subj_status == "a") { ?> selected="selected" <?php } ?> ><?php __("active") ?></option>
+               <option value="0" <?php if($subj_status == 0) { ?> selected="selected" <?php } ?> ><?php __("pending") ?></option>
+               <option value="1" <?php if($subj_status == 1) { ?> selected="selected" <?php } ?> ><?php __("active") ?></option>
             </select>
 
 

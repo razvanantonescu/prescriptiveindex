@@ -98,6 +98,17 @@ function decode($var, $lang) {
 
 
 //////////////* legate de afisare subiecti */
+
+function print_all_subjects () {
+   global $dbconnect;
+   $query = "SELECT * FROM subjects ORDER BY subj_id ASC;";
+   $result = mysql_query($query, $dbconnect);
+   confirm_query($result);
+	while ($row = mysql_fetch_array($result)){
+		echo $row['first_name'] . " " . $row['last_name'] . "<br />";
+	}
+}
+
 function get_all_subjects () {
    global $dbconnect;
    $query = "SELECT * FROM subjects ORDER BY subj_id ASC;";
@@ -106,10 +117,18 @@ function get_all_subjects () {
    return $result;
 }
 
+function get_all_subject_ids () {
+   global $dbconnect;
+   $query = "SELECT subj_id FROM subjects ORDER BY subj_id ASC;";
+   $result = mysql_query($query, $dbconnect);
+   confirm_query($result);
+   return $result;
+}
+
 
 function get_pending_subjects () {
    global $dbconnect;
-   $query = "SELECT * FROM subjects WHERE status = 'p' ORDER BY subj_id ASC;";
+   $query = "SELECT * FROM subjects WHERE status = 0 ORDER BY subj_id ASC;";
    //echo $query; exit;
    $result = mysql_query($query, $dbconnect);
    confirm_query($result);
@@ -119,7 +138,7 @@ function get_pending_subjects () {
 
 function filter_active_subjects ($filter="1") {
    global $dbconnect;
-   $query = "SELECT * FROM subjects WHERE ".$filter." AND status = 'a' ORDER BY subj_id ASC;";
+   $query = "SELECT * FROM subjects WHERE ".$filter." AND status = '1' ORDER BY subj_id ASC;";
    //echo $query; exit;
    $result = mysql_query($query, $dbconnect);
    confirm_query($result);
@@ -162,12 +181,19 @@ function get_sel_subj_for_list($list_id) {
 
 function get_subj_for_list($list_id) {
    global $dbconnect;
-   $query = "SELECT rel_subj_list.list_id, rel_subj_list.subj_id, subjects.first_name, subjects.last_name FROM rel_subj_list, subjects WHERE rel_subj_list.list_id = {$list_id} AND subjects.subj_id = rel_subj_list.subj_id";
+   $query = "SELECT rel_subj_list.list_id, rel_subj_list.subj_id, subjects.first_name, subjects.last_name, subjects.email FROM rel_subj_list, subjects WHERE rel_subj_list.list_id = {$list_id} AND subjects.subj_id = rel_subj_list.subj_id";
    $result = mysql_query($query, $dbconnect);
    confirm_query($result);
    return $result;
 }
 
+function get_active_subj_for_list($list_id) {
+   global $dbconnect;
+   $query = "SELECT rel_subj_list.list_id, rel_subj_list.subj_id, subjects.first_name, subjects.last_name, subjects.email FROM rel_subj_list, subjects WHERE rel_subj_list.list_id = {$list_id} AND subjects.status = 1 AND subjects.subj_id = rel_subj_list.subj_id";
+   $result = mysql_query($query, $dbconnect);
+   confirm_query($result);
+   return $result;
+}
 
 function subject_exists($email) {
    global $dbconnect;
@@ -259,6 +285,15 @@ function get_all_questionnaires () {
    confirm_query($result);
    return $result;
 }
+
+function get_all_questionnaire_ids () {
+   global $dbconnect;
+   $query = "SELECT questionnaire_id FROM questionnaires ORDER BY questionnaire_id ASC;";
+   $result = mysql_query($query, $dbconnect);
+   confirm_query($result);
+   return $result;
+}
+
 
 function get_questionnaire($questionnaire_id ) {
    global $dbconnect;
@@ -382,7 +417,7 @@ function get_questionnaire_for_question($question_id) {
 //////////////* legate de afisare email */
 
 
-function get_all_emails () {
+function get_all_templates () {
    global $dbconnect;
    $query = "SELECT * FROM emails ORDER BY email_id ASC;";
    $result = mysql_query($query, $dbconnect);
@@ -398,6 +433,26 @@ function get_email($email_id) {
    return $result;
 }
 
+function get_template_name($template_id, $lang) {
+   global $dbconnect;
+   $query = "SELECT `name` FROM emails WHERE email_id={$template_id}";
+   $result = mysql_query($query, $dbconnect);
+   confirm_query($result);
+   $row = mysql_fetch_array($result);
+   $template_name = decode($row["name"], $lang);
+   return $template_name;
+}
+
+function get_template_body($template_id, $lang) {
+   global $dbconnect;
+   $query = "SELECT `body` FROM emails WHERE email_id={$template_id}";
+   $result = mysql_query($query, $dbconnect);
+   //confirm_query($result);
+   $row = mysql_fetch_array($result);
+   $template_name = decode($row["body"], $lang);
+   return $template_name;
+}
+
 function get_rel_studies_for_email($email_id) {
    global $dbconnect;
    $query = "SELECT rel_studies_email.study_id FROM rel_studies_email WHERE rel_studies_email.email_id = {$email_id}";
@@ -408,6 +463,15 @@ function get_rel_studies_for_email($email_id) {
       $return[] = $row["study_id"];
    }
    return $return;
+}
+
+function get_rel_template_id_for_study($study_id) {
+   global $dbconnect;
+   $query = "SELECT email_id FROM rel_studies_email WHERE study_id = {$study_id}";
+   $result = mysql_query($query, $dbconnect);
+   confirm_query($result);
+	$row = mysql_fetch_array($result);
+	return $row['email_id'];
 }
 
 function get_studies_for_email($email_id) {
@@ -427,6 +491,30 @@ function get_all_studies () {
    return $result;
 }
 
+function get_all_study_ids () {
+   global $dbconnect;
+   $query = "SELECT study_id FROM studies ORDER BY study_id ASC;";
+   $result = mysql_query($query, $dbconnect);
+   confirm_query($result);
+   return $result;
+}
+
+
+
+function get_all_study_ids_for_list($list_id) {
+   global $dbconnect;
+   $query = "SELECT rel_list_study.study_id FROM rel_list_study WHERE rel_list_study.list_id = {$list_id}";
+   $result = mysql_query($query, $dbconnect);
+   confirm_query($result);
+   $return = array();
+   while ($row = mysql_fetch_array($result)) {
+      $return[] = $row["study_id"];
+   }
+   return $return;
+}
+
+
+
 function get_study($study_id) {
    global $dbconnect;
    $query = "SELECT * FROM studies WHERE study_id={$study_id}";
@@ -436,9 +524,9 @@ function get_study($study_id) {
 }
 
 
-function get_study_name($study_id) {
+function get_study_name($study_id, $lang) {
    global $dbconnect;
-   global $lang;
+   //global $lang;
 
    $query = "SELECT `name` FROM studies WHERE study_id={$study_id}";
    $result = mysql_query($query, $dbconnect);
@@ -460,6 +548,7 @@ function get_sel_list_for_study($study_id) {
    }
    return $return;
 }
+
 
 function get_sel_quest_for_study($study_id) {
    global $dbconnect;
@@ -501,6 +590,20 @@ function get_question_type ($question_id){
    return $type;
 }
 
+
+
+function subject_completed_study($subj_id, $study_id) {
+	 global $dbconnect;
+         $query = "SELECT * FROM results WHERE subj_id = ".$subj_id." AND study_id = ".$study_id;
+         $result = mysql_query($query, $dbconnect);
+	 confirm_query($result);
+	 $num = mysql_num_rows($result);
+	 if($num == 0) {
+	    return false;
+	 } else {
+	    return true;
+	 }
+}
 
 
 ?>

@@ -22,7 +22,7 @@ if(isset($_GET["email_id"])){
       <p><strong><?php __("Template Name") ?>:</strong> <?php echo $email_name ?></p>
       <p><strong><?php __("Body") ?>:</strong> <?php echo $email_body ?></p>
       
-      <p><?php __("Studies related to this template") ?>:</p>
+      <p><?php __("This template is used for the following studies") ?>:</p>
       <ul>
       <?php
          $rel_studies = get_studies_for_email($email_id);
