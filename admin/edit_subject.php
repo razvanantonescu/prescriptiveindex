@@ -11,6 +11,7 @@ if(isset($_GET["subj_id"])){
       $subj_first_name = $row["first_name"];
       $subj_last_name = $row["last_name"];
       $subj_gender = $row["gender"];
+      $subj_bdate = $row["birth_date"];
       $subj_email = $row["email"];
       $subj_status = $row["status"];
    ?>
@@ -35,6 +36,12 @@ if(isset($_GET["subj_id"])){
                <option value="m" <?php if($subj_gender == "m") { ?> selected="selected" <?php } ?> ><?php __("male") ?></option>
                <option value="f" <?php if($subj_gender == "f") { ?> selected="selected" <?php } ?> ><?php __("female") ?></option>
             </select>
+
+
+            <label for="subj_bdate" class="subj_bdate"><?php __("Date of Birth") ?>:</label>
+            <input id="datepicker" class="required subj_bdate" name="subj_bdate" type="text" value="<?php echo $subj_bdate ?>" />
+
+
             <label for="subj_status"><?php __("Status") ?>:</label>
             <select name="subj_status">
                <option value="0" <?php if($subj_status == 0) { ?> selected="selected" <?php } ?> ><?php __("pending") ?></option>
@@ -95,6 +102,12 @@ if(isset($_GET["subj_id"])){
                <option value="m"><?php __("male") ?></option>
                <option value="f"><?php __("female") ?></option>
             </select>
+
+
+            <label for="subj_bdate" class="subj_bdate"><?php __("Date of Birth") ?>:</label>
+            <input id="datepicker" class="required subj_bdate" name="subj_bdate" type="text" value="" />
+
+
             <label for="subj_email"><?php __("Email") ?>:</label>
             <input class="required" name="subj_email" type="text" value="" />
          </fieldset>
@@ -124,5 +137,20 @@ if(isset($_GET["subj_id"])){
 <?php
 }
 ?>
+
+<script>
+$(function() {
+	$(function() {
+		$( "#datepicker" ).datepicker({
+			changeMonth: true,
+			changeYear: true,
+			dayNamesMin: ["D", "L", "M", "M", "J", "V", "S"],
+			dateFormat: "yy-mm-dd",
+			yearRange: "c-70:c"
+		});
+
+	});
+});
+</script>
 
 <?php require_once("../includes/footer.php") ?>

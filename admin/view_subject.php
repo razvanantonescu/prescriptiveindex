@@ -27,7 +27,7 @@ if(isset($_GET["subj_id"])){
       <p><strong><?php __("Date of Birth") ?>:</strong> <?php echo $subj_bdate ?></p>
       <p><strong><?php __("Email") ?>:</strong> <?php echo $subj_email ?></p>
       <p><strong><?php __("Tested") ?>:</strong> <?php if($subj_tested == '1'){__("tested");} else {__("not tested");} ?></p>
-      <p><strong><?php __("Status") ?>:</strong> <?php if($subj_status == '1'){__("aproved");} else {__("pending");} ?></p>
+      <p><strong><?php __("Status") ?>:</strong> <?php if($subj_status == '1'){__("approved");} else {__("pending");} ?></p>
       <p><strong><?php __("Lists") ?>:</strong></p>
       <ul>
          <?php
@@ -35,7 +35,6 @@ if(isset($_GET["subj_id"])){
             while ($row = mysql_fetch_array($lists)) {
                   $list_id = $row["list_id"];
                   $list_name = decode($row["name"], $lang);
-                  //$list_desc = decode($row["desc"], $lang);
          ?>
          <li><a href="view_list.php?list_id=<?php echo $list_id ?>"><?php echo $list_name ?></a></li>
          <?php

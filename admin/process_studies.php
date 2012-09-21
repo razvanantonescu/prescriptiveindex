@@ -44,10 +44,6 @@
                WHERE `study_id` = '".$study_id."'
                ";
 
-
-
-
-
       $result = mysql_query($query, $dbconnect);
       confirm_query($result);
 
@@ -76,27 +72,24 @@
 			
 				if($sel_template != null) {
 					$template_body = get_template_body($sel_template, $lang);
+					$subj_id = $row['subj_id'];
+					$subj_name = $row['first_name'] ." ". $row['last_name'];
+					$subj_email = $row['email'];
+					$title = get_study_name($study_id, $lang);
+					
+					$rel_template = get_rel_template_id_for_study($study_id);
+					
+					if($sel_template == $rel_template && $sel_template != null) {
+							$query="INSERT IGNORE INTO mails (`study_id`, `subj_id`, `nume`, `email`, `titlu`, `body`)
+									VALUES ('".$study_id."', '".$subj_id."', '".$subj_name."', '".$subj_email."', '".$title."', '".$template_body."');";
+					} else {
+						$query="REPLACE INTO mails (`study_id`, `subj_id`, `nume`, `email`, `titlu`, `body`)
+									VALUES ('".$study_id."', '".$subj_id."', '".$subj_name."', '".$subj_email."', '".$title."', '".$template_body."');";
+					}
+					$result = mysql_query($query, $dbconnect);
+					confirm_query($result);
+					$sel_subjects[] = $subj_id;
 				}
-				
-				$subj_id = $row['subj_id'];
-				$subj_name = $row['first_name'] ." ". $row['last_name'];
-				$subj_email = $row['email'];
-				$title = get_study_name($study_id, $lang);
-				
-				$rel_template = get_rel_template_id_for_study($study_id);
-				
-				if($sel_template == $rel_template) {
-						$query="INSERT IGNORE INTO mails (`study_id`, `subj_id`, `nume`, `email`, `titlu`, `body`)
-								VALUES ('".$study_id."', '".$subj_id."', '".$subj_name."', '".$subj_email."', '".$title."', '".$template_body."');";
-				} else {
-					$query="REPLACE INTO mails (`study_id`, `subj_id`, `nume`, `email`, `titlu`, `body`)
-								VALUES ('".$study_id."', '".$subj_id."', '".$subj_name."', '".$subj_email."', '".$title."', '".$template_body."');";
-				}
-
-
-				$result = mysql_query($query, $dbconnect);
-				confirm_query($result);
-				$sel_subjects[] = $subj_id;
 			}
       }
 
@@ -141,7 +134,9 @@
       redirect("view_study.php?study_id={$study_id}");
    }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// add study
+/*
+ * add study
+ */
    
    if ($action == "add") {
 
@@ -167,21 +162,18 @@
 
 						$subjects = get_active_subj_for_list($list_id);
 						while ($row = mysql_fetch_array($subjects)) {
-							echo $row['first_name'] ." ". $row['last_name'] . "<br >";
-							
 							if($sel_template != null) {
 								$template_body = get_template_body($sel_template, $lang);
+								$subj_id = $row['subj_id'];
+								$subj_name = $row['first_name'] ." ". $row['last_name'];
+								$subj_email = $row['email'];
+								$query="INSERT IGNORE INTO mails (`study_id`, `subj_id`, `nume`, `email`, `titlu`, `body`)
+											VALUES ('".$study_id."', '".$subj_id."', '".$subj_name."', '".$subj_email."', 'Un titlu', '".$template_body."');
+											";
+								$result = mysql_query($query, $dbconnect);
+								confirm_query($result);
 							}
-							$subj_id = $row['subj_id'];
-							$subj_name = $row['first_name'] ." ". $row['last_name'];
-							$subj_email = $row['email'];
-							$query="INSERT IGNORE INTO mails (`study_id`, `subj_id`, `nume`, `email`, `titlu`, `body`)
-										VALUES ('".$study_id."', '".$subj_id."', '".$subj_name."', '".$subj_email."', 'Un titlu', '".$template_body."');
-										";
-							$result = mysql_query($query, $dbconnect);
-							confirm_query($result);
 						}
-
                }
             }
 

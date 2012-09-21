@@ -25,6 +25,7 @@
    if(isset($_POST["subj_gender"]))	$subj_gender = $_POST["subj_gender"];
    if(isset($_POST["subj_status"]))	$subj_status = $_POST["subj_status"];
    if(isset($_POST["subj_email"]))	$subj_email = mysql_real_escape_string(htmlspecialchars($_POST["subj_email"]));
+	if(isset($_POST["subj_bdate"]))	$subj_bdate = $_POST["subj_bdate"];
 
    $sel_lists = array();
    if (isset($_POST["lists"])) $sel_lists = $_POST["lists"];
@@ -37,6 +38,7 @@
                `first_name` = '".$subj_first_name."',
                `last_name` = '".$subj_last_name."',
                `gender` = '".$subj_gender."',
+               `birth_date` = '".$subj_bdate."',
                `status` = '".$subj_status."',
                `email` = '".$subj_email."'  
                WHERE `subj_id` = '".$subj_id."'
@@ -70,11 +72,12 @@
 				
 				foreach($studies as $study_id) {
 					$template_id = get_rel_template_id_for_study($study_id);
+					$study_name = get_study_name($study_id, $lang);
 
 					if($template_id != null) {
 						$template_body = get_template_body($template_id, $lang);
 						$query="INSERT IGNORE INTO mails (`study_id`, `subj_id`, `nume`, `email`, `titlu`, `body`)
-								VALUES ('".$study_id."', '".$subj_id."', '".$subj_name."', '".$subj_email."', 'Un titlu', '".$template_body."');";
+								VALUES ('".$study_id."', '".$subj_id."', '".$subj_name."', '".$subj_email."', '".$study_name."', '".$template_body."');";
 						$result = mysql_query($query, $dbconnect);
 					}
 					$sel_studies[] = $study_id;
@@ -111,15 +114,15 @@
       $_SESSION["mesaj"] = $mesaj;
 		//die();
       redirect("view_subject.php?subj_id=".$subj_id);
-      
    }
    
 // add subject
    
    if ($action == "add") {
       $mesaj = array();
-      $query = "INSERT INTO subjects (`first_name`, `last_name`, `gender`, `email`)
-               VALUES ('".$subj_first_name."', '".$subj_last_name."', '".$subj_gender."', '".$subj_email."') ";
+
+      $query = "INSERT INTO subjects (`first_name`, `last_name`, `gender`, `birth_date`, `email`)
+               VALUES ('".$subj_first_name."', '".$subj_last_name."', '".$subj_gender."', '".$subj_bdate."', '".$subj_email."') ";
    
       $result = mysql_query($query, $dbconnect);
       confirm_query($result);

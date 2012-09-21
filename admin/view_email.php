@@ -14,13 +14,16 @@ if(isset($_GET["email_id"])){
          $email_body_en = decode($row["body"], "en");
          $email_name = decode($row["name"], $lang);
          $email_body = decode($row["body"], $lang);
+
    ?>
+
    <h1 class="emails"><?php echo $email_name ?></h1>
    
    <div id="list_details">
    <?php echo output_message() ?>
       <p><strong><?php __("Template Name") ?>:</strong> <?php echo $email_name ?></p>
-      <p><strong><?php __("Body") ?>:</strong> <?php echo $email_body ?></p>
+      <p><strong><?php __("Body") ?>:</strong></p>
+      <div class="template_body"><?php echo nl2br($email_body) ?></div>
       
       <p><?php __("This template is used for the following studies") ?>:</p>
       <ul>
@@ -35,7 +38,9 @@ if(isset($_GET["email_id"])){
          }
       ?>
       </ul>
-      <p><a href="edit_email.php?email_id=<?php echo $email_id ?>"><?php __("Edit template") ?></a></p>
+      <p><a href="edit_email.php?email_id=<?php echo $email_id ?>"><?php __("Edit email template") ?></a></p>
+      <p><a href="process_emails.php?email_id=<?php echo $email_id ?>&action=delete"><?php __("Delete email template") ?></a></p>
+
    </div>
 
 <?php

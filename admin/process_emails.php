@@ -17,7 +17,10 @@
       }
    }
 
-   if(isset($_REQUEST["email_id"])) $email_id = $_REQUEST["email_id"];
+   $email_name = array();
+	$email_body = array();
+	
+	if(isset($_REQUEST["email_id"])) $email_id = $_REQUEST["email_id"];
    if(isset($_POST["email_name_ro"])) $email_name["ro"] = htmlspecialchars($_POST["email_name_ro"]);
    if(isset($_POST["email_name_en"])) $email_name["en"] = htmlspecialchars($_POST["email_name_en"]);
    if(isset($_POST["email_body_ro"])) $email_body["ro"] = htmlspecialchars($_POST["email_body_ro"]);  
@@ -26,7 +29,37 @@
    $email_name = mysql_real_escape_string(json_encode($email_name));
    $email_body = mysql_real_escape_string(json_encode($email_body));
 
-//////////////////////////////////////////////////////////////////////////////////////// edit email template
+
+/*
+ * delete email template
+ */
+
+   if ($action == "delete") {
+      $mesaj = array();
+      $template_name = get_template_name($email_id, $lang);
+
+		$query = "DELETE FROM emails WHERE email_id = '".$email_id."'";
+      $result = mysql_query($query, $dbconnect);
+      confirm_query($result);
+      if (mysql_affected_rows() == 1) {
+         $mesaj[] = "Template {$template_name} has been deleted.";
+      }
+		
+		$query = "DELETE from  rel_studies_email WHERE email_id = '".$email_id."'";
+      $result = mysql_query($query, $dbconnect);
+      confirm_query($result);
+      if (mysql_affected_rows() == 1) {
+         $mesaj[] = "Relations to this email template were removed.";
+      }
+
+      $_SESSION["mesaj"] = $mesaj;
+      redirect("manage_emails.php");
+	}
+
+
+/*
+ * edit email template
+ */
    
    if ($action == "edit") {
 
@@ -40,7 +73,9 @@
       redirect("view_email.php?email_id=".$email_id);
    }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// add study
+/*
+ * add email template
+ */
    
    if ($action == "add") {
 

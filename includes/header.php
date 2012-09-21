@@ -11,9 +11,15 @@
 	<link rel="shortcut icon" href="../images/favicon.ico" />
 	<link href="../css/reset.css" rel="stylesheet" type="text/css" />
 	<link href="../css/uvt.css" rel="stylesheet" type="text/css" />
+	<link href="../css/jquery.ui.datepicker.css" rel="stylesheet" type="text/css" />
+	<link href="../css/datepicker.css" rel="stylesheet" type="text/css" />
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script src="../js/script.js"></script>
 	<script src="../js/ajax.script.js"></script>
+
+	<script src="../js/jquery-1.8.0.min.js"></script>
+	<script src="../js/jquery-ui-1.8.23.custom.min.js"></script>
 
 </head>
 <body>

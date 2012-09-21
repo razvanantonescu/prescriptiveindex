@@ -1,5 +1,4 @@
 <?
-
 session_start();
 
 $username = "test";

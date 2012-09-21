@@ -43,10 +43,21 @@ if(isset($_GET["email_id"])){ /////////////////////////////// EDIT email
             <textarea class="required" name="email_body_en"><?php echo $email_body_en ?></textarea>
          </div>
       </fieldset>
-
+      
       <div class="clear">
          <input name="submit" type="submit" value="<?php __("Save") ?>  &raquo;" class="buton"/>
       </div>
+
+      <div class="clear ro legenda">
+         <p><?php __("You may use the following tags in the email body:") ?></p>
+         <ul>
+            <li>[nume] - <?php __("subject name") ?></li>
+            <li>[studiu] - <?php __("study name") ?></li>
+            <li>[descriere studiu] - <?php __("study description") ?></li>
+            <li>[url] - <?php __("questionnaire url") ?></li>
+         </ul>
+      </div>
+
    </form>
 
 <?php
@@ -83,6 +94,17 @@ if(isset($_GET["email_id"])){ /////////////////////////////// EDIT email
       <div class="clear">
          <input name="submit" type="submit" value="<?php __("Send") ?>  &raquo;" class="buton"/>
       </div>
+
+      <div class="clear ro legenda">
+         <p><?php __("You may use the following tags in the email body:") ?></p>
+         <ul>
+            <li>[nume] - <?php __("subject name") ?></li>
+            <li>[studiu] - <?php __("study name") ?></li>
+            <li>[descriere studiu] - <?php __("study description") ?></li>
+            <li>[url] - <?php __("questionnaire url") ?></li>
+         </ul>
+      </div>
+
    </form>
 
 <?php
