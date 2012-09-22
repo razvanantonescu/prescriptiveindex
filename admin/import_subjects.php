@@ -9,7 +9,8 @@
 		
 		if ( isset($_FILES["file"])) {
 		  if ($_FILES["file"]["error"] > 0) {
-			  echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
+			  //echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
+			  __('You have not selected a file!');
 		  } else {
 		
 			  //if file already exists

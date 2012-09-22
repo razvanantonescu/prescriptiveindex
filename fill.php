@@ -109,6 +109,8 @@
 	}
 ?>
 
+<!--/////////////////////////////////////////////////////////-->
+
 <?php
 	if(isset($_GET['data'])) {
 		$data = explode(',', base64_decode($_GET['data']));
@@ -117,6 +119,18 @@
 	} else {
 		redirect("index.php");
 	}
+
+
+	$tester = subject_completed_study($subject_id, $study_id);
+	
+	if($tester == true) {
+		?>
+			<p>Ai completat deja acest studiu</p>
+			<a href="index.php">Prescriptive Index</a>
+		<?php
+		die;
+	}
+
 	
    $result = get_study($study_id);
    $row = mysql_fetch_array($result);

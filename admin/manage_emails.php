@@ -24,7 +24,7 @@
             ?>
                <li>
                   <span class="name"><?php echo $email_name ?></span>
-                  <span class="description"><?php echo $email_body ?></span>
+                  <span class="description"><?php echo nl2br($email_body) ?></span>
                   <span class="view"><a href="view_email.php?email_id=<?php echo $email_id ?>"><?php __("View") ?></a></span>
                   <span class="edit"><a href="edit_email.php?email_id=<?php echo $email_id ?>"><?php __("Edit") ?></a></span>
                </li>

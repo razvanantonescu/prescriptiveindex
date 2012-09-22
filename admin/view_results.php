@@ -5,7 +5,7 @@ if(isset($_GET["study_id"]) && isset($_GET["subj_id"])){
    $study_id = $_GET["study_id"];
    $subject_id = $_GET["subj_id"];
    $subject_name = get_subj_name($subject_id);
-   $study_name = get_study_name($study_id);
+   $study_name = get_study_name($study_id, $lang);
 
 ?>   
 

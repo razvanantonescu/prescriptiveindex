@@ -128,11 +128,25 @@
 
       <p class="clear"><a href="edit_subject.php"><?php __("Add subject") ?></a></p>
 
-      <form action="import_subjects.php" method="post" enctype="multipart/form-data">
+      <form id="import_subjects" action="import_subjects.php" method="post" enctype="multipart/form-data">
          <label for="file"><?php __('Import subjects from csv file') ?></label>
          <input type="file" name="file" id="file" />
-         <input type="submit" name="submit" value="<?php __("Import subjects") ?>"/>
+         <input type="submit" name="submit" value="<?php __("Import subjects") ?>" onclick="submit_form(this); return false;" />
       </form>
+
+<script>
+	function submit_form(element) {
+		var elem = $(element);
+		var form = elem.parent('form');
+		var fileName = $("#file").val();
+		
+		if(fileName == '') {
+			alert('Nu ati selectat nici un fisier!');
+		} else {
+			form.submit();
+		}
+	};
+</script>
 
    </div>
   

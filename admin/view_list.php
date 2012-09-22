@@ -54,13 +54,24 @@ if(isset($_GET["list_id"])){
          <label for="file"><?php __('Import subjects from csv file') ?>*</label>
          <input type="hidden" name="list_id" value="<?php echo $list_id ?>" />
          <input type="file" name="file" id="file" />
-         <input type="submit" name="submit" value="<?php __("Import subjects") ?>"/>
+         <input type="submit" name="submit" value="<?php __("Import subjects") ?>" onclick="submit_form(this); return false;" />
       </form>
       <p>* <?php __('Subjects will be automatically included in this list') ?></p>
 
+      <script>
+         function submit_form(element) {
+            var elem = $(element);
+            var form = elem.parent('form');
+            var fileName = $("#file").val();
+            
+            if(fileName == '') {
+               alert('Nu ati selectat nici un fisier!');
+            } else {
+               form.submit();
+            }
+         };
+      </script>
 
-
-      
    </div>
 
 <?php
