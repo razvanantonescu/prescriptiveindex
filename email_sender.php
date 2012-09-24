@@ -1,5 +1,35 @@
 <?
   include_once 'mysql_conf.php';
+  include_once 'PHPMailer_5.2.2-beta2/class.phpmailer.php';
+
+  function email($to, $subject, $body){
+    $mail = new PHPMailer();
+
+    $mail->SMTPAuth = true;
+    $mail->SMTPSecure = "ssl";
+    $mail->Host = "smtp.gmail.com";
+    $mail->Port = 465;
+    $mail->Username = "invitation@prescriptiveindex.ro";
+    $mail->Password = "U8GWm&hM";
+
+    $mail->SetFrom("invitation@prescriptiveindex.ro", "Invitatie Studiu/Study Invitation"); 
+
+    if(is_array($to)){
+        foreach($to as $t){
+            $mail->AddAddress($t);                   
+        }
+    }else{
+        $mail->AddAddress($to);
+    }
+
+    $mail->Subject = $subject;
+    $mail->Body = $body;
+
+    $res = !$mail->Send();
+    unset($mail);
+    return $res;
+  }
+
   $query = "select * from mails where status = 0 limit 10;";
   $result = mysql_query($query);
   
@@ -36,10 +66,7 @@
     $subject = str_replace($tags, $values, $row['titlu']);
     $message = html_entity_decode(str_replace($tags, $values, $row['body']));
     
-    $headers = 	'From: '.$from."\r\n" .
-                'Reply-To: '.$from."\r\n";
-
-    mail($to, $subject, $message, $headers); 
-    $query = "update mails set status = 2 where id =".$row['id'];
+    $res = 2 + email($to, $subject, $message); 
+    $query = "update mails set status = $res where id =".$row['id'];
     mysql_query($query);
   }
