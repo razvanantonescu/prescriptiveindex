@@ -34,6 +34,8 @@
 				<a title="Română" href="<?php echo get_url() ?>?lang=ro">
 					<img class="lang-icon" alt="Română" src="../images/ro.gif">
 				</a>
+				<br>
+				  [<a href='http://www.prescriptiveindex.ro/admin/?logout'>Logout</a>]
 			</div>
 
 			<img id="logo" src="../images/uvt_logo.png" alt="" />

@@ -7,8 +7,7 @@ $password = "test";
 if(isset($_GET['logout']))
 {
   unset($_SESSION["login"]);
-  echo "You have logout ... ";
-  echo "[<a href='" . $_SERVER['PHP_SELF'] . "'>Login</a>]";
+  header('Location: http://www.prescriptiveindex.ro/');
   exit;
 }
 
@@ -25,13 +24,11 @@ else
 {
   if($_SERVER['PHP_AUTH_USER'] == $username && $_SERVER['PHP_AUTH_PW'] == $password)
   {
-    echo "You have logged in ... ";
-    echo "[<a href='" . $_SERVER['PHP_SELF'] . "?logout'>Logout</a>]";
   }
   else
   {
     unset($_SESSION["login"]);
-    header("Location: " . $_SERVER['PHP_SELF']);
+    header('Location: http://www.prescriptiveindex.ro/');
   }
 }
 
