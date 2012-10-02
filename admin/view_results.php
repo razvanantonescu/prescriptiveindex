@@ -71,7 +71,7 @@ if(isset($_GET["study_id"]) && isset($_GET["subj_id"])){
 ?>
       </ul>
       
-      <a class="download csv" href="csv.php?subj_id=<?php echo $subject_id ?>&study_id=<?php echo $study_id ?>" title="<?php __('Descarcă în format .csv') ?>"><?php __('Download in csv format') ?></a>
+      <a class="download csv" href="csv.php?subj_id=<?php echo $subject_id ?>&study_id=<?php echo $study_id ?>" title="<?php __('Download csv') ?>"><?php __('Download csv') ?></a>
       
    </div><!-- list details -->
 <?php require_once("../includes/footer.php") ?>

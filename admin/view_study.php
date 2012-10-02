@@ -77,7 +77,7 @@ if(isset($_GET["study_id"])){
                $result = mysql_query($check, $dbconnect);
                   if(mysql_num_rows($result) == 0){
       ?>
-                  <a href="../fill.php?data=<?php echo base64_encode(implode(',', array($study_id, $subj_id))) ?>"><?php __("[completeaza]") ?> </a>
+                  <a href="../fill.php?data=<?php echo base64_encode(implode(',', array($study_id, $subj_id))) ?>"><?php __("[fill]") ?> </a>
       <?php
                   }
       ?>

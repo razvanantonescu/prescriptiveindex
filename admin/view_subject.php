@@ -62,12 +62,12 @@ if(isset($_GET["subj_id"])){
 	    ?>
 				<li>
 				 <a href="view_study.php?study_id=<?php echo $study_id ?>"><?php echo $study_name ?></a> - 
-				 <a href="view_results.php?study_id=<?php echo $study_id ?>&subj_id=<?php echo $subj_id ?>"><?php __('rezultate') ?></a>
+				 <a href="view_results.php?study_id=<?php echo $study_id ?>&subj_id=<?php echo $subj_id ?>"><?php __('answers') ?></a>
 				</li>
 	    <?php
 			}
 		  } else {
-			__('nu a participat încă la nici un studiu') ;
+			__("No study attended by this subject yet.") ;
 		  }
          ?>
       </ul>

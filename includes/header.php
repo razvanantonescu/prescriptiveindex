@@ -43,10 +43,11 @@
 		<div id="main_content">
 			<div id="top_nav">
 				<ul class="menu">
-					<li><a href="manage_lists.php"><?php __("List management") ?></a></li>
-					<li><a href="manage_subjects.php"><?php __("Subjects management") ?></a></li>
-					<li><a href="manage_questionnaires.php"><?php __("Questionnaire management") ?></a></li>
-					<li><a href="manage_studies.php"><?php __("Study management") ?></a></li>
-					<li><a href="manage_emails.php"><?php __("Email management") ?></a></li>
+					<li><a href="/admin"><?php __("Home") ?></a></li>
+					<li><a href="/admin/manage_lists.php"><?php __("List management") ?></a></li>
+					<li><a href="/admin/manage_subjects.php"><?php __("Subjects management") ?></a></li>
+					<li><a href="/admin/manage_questionnaires.php"><?php __("Questionnaire management") ?></a></li>
+					<li><a href="/admin/manage_studies.php"><?php __("Study management") ?></a></li>
+					<li><a href="/admin/manage_emails.php"><?php __("Email management") ?></a></li>
 				</ul>
 			</div>
