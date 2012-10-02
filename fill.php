@@ -44,7 +44,6 @@
 		redirect("index.php");
 	}
 
-
 	$tester = subject_completed_study($subject_id, $study_id);
 	
 	if($tester == true) {
@@ -87,8 +86,7 @@
 					
 						$liste = get_list_for_study($study_id);
 						while($lista = mysql_fetch_array($liste)) {
-							$list_id = $lista['list_id'];
-							$subjects = get_subj_for_list($list_id);
+							$subjects = get_subj_for_list($lista['list_id']);
 							while($subject = mysql_fetch_array($subjects)) {
 								$sel_subjects[] = $subject['subj_id'];
 							}
@@ -98,7 +96,9 @@
 						$sub_neevaluati = array();
 					
 						foreach($sel_subjects as $rel_subject_id) {
-							$query = "SELECT rel_subj_id FROM multievaluator WHERE `subj_id` = '".$subject_id."' AND `rel_subj_id` = '".$rel_subject_id."'";
+						$query = "SELECT rel_subj_id FROM multievaluator
+									WHERE `subj_id` = '".$subject_id."' AND `rel_subj_id` = '".$rel_subject_id."' AND `study_id` = '".$study_id."'";
+									
 							$tester = mysql_query($query, $dbconnect);
 							//
 							if(mysql_numrows($tester) == 0) {
@@ -124,7 +124,7 @@
 							<?php
 						} else {
 							?>
-								<p><?php __('You have already completed this study.') ?></p>
+								<p><?php __('You have already completed this study') ?></p>
 								<a href="index.php"><?php __('Back') ?></a>
 							<?php
 								die;

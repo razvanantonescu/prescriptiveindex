@@ -5,6 +5,15 @@
   include_once '../includes/functions.php';
   $lang = set_language();
 
+  $relatii = array(
+    1 => 'subordonat',
+    2 => 'manager',
+    3 => 'egal',
+    4 => 'sine însuşi',
+    5 => 'client'
+  );
+
+
   if(isset($_GET["study_id"])){
     $study_id = $_GET["study_id"];
     $study_type = get_study_type($study_id);
@@ -33,12 +42,11 @@
     }
     fputcsv($outstream, $header_data);
 
-
     $subject_ids = array_unique($subject_ids);
-    
-    foreach ($subject_ids as $subject_id) {
-      
-      $query = "SELECT response_id FROM results WHERE `study_id` = '".$study_id."' AND `subj_id` = '".$subject_id."'";
+
+    foreach ($subject_ids as $subj_id) {
+      $response_ids = array();
+      $query = "SELECT response_id FROM results WHERE `study_id` = '".$study_id."' AND `subj_id` = '".$subj_id."'";
       $result = mysql_query($query);
       confirm_query($result);
       while ($row = mysql_fetch_assoc($result)) {
@@ -47,16 +55,16 @@
       $response_ids = array_unique($response_ids);
       
       foreach($response_ids as $response_id){
-        $query = "SELECT * FROM results WHERE `study_id`='".$study_id."' AND `subj_id`='".$subject_id."' AND `response_id`='".$response_id."'";
+        $query = "SELECT * FROM results WHERE `study_id`='".$study_id."' AND `subj_id`='".$subj_id."' AND `response_id`='".$response_id."'";
         $result = mysql_query($query);
         confirm_query($result);
         while ($row = mysql_fetch_assoc($result)) {
-          $data['subj_id'] = $subject_id;
-          $data['subj_name'] = get_subj_name($subject_id);
+          $data['subj_id'] = $subj_id;
+          $data['subj_name'] = get_subj_name($subj_id);
         
           if($study_type == '360') {
-            $data['rel_subj_name'] = get_subj_name(get_rel_subj_id($subject_id, $response_id));
-            $data['relation'] = get_relation($subject_id, $response_id);
+            $data['rel_subj_name'] = get_subj_name(get_rel_subj_id($subj_id, $response_id));
+            $data['relation'] = $relatii[get_relation($subj_id, $response_id)];
           }
         
           $data[$row['question_id']] = $row['data'];

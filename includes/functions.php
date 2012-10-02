@@ -7,20 +7,15 @@ function confirm_query($result_set) {
 }
 
 function set_language() {
-   if(isset($_GET["lang"]) && $_GET["lang"]!="") 
-   {
+   if(isset($_GET["lang"]) && $_GET["lang"]!="") {
       $lang = $_GET["lang"];
       $_SESSION["lang"] = $lang;
       return $lang;
-   } else 
-   {
-      if(isset($_SESSION["lang"]) && $_SESSION["lang"]!="") 
-      {
+   } else {
+      if(isset($_SESSION["lang"]) && $_SESSION["lang"]!="") {
          $lang = $_SESSION["lang"];
          return $lang;
-      } 
-      else 
-      {
+      } else {
          $lang = "ro";
          $_SESSION["lang"] = $lang;
          return $lang;

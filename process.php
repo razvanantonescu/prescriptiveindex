@@ -86,8 +86,8 @@ $check = "SELECT * FROM results
 		}
 		
 		if($study_type == '360') {
-			$query = "INSERT IGNORE INTO multievaluator	(`subj_id`, `rel_subj_id`, `relation`, `response_id`) 
-														VALUES	('".$subject_id."', '".$rel_subject_id."', '".$relatie."', '".$response_id."')";
+			$query = "INSERT IGNORE INTO multievaluator	(`subj_id`, `rel_subj_id`, `relation`, `study_id`, `response_id`) 
+														VALUES	('".$subject_id."', '".$rel_subject_id."', '".$relatie."', '".$study_id."', '".$response_id."')";
 			$result = mysql_query($query, $dbconnect);
 			confirm_query($result);
 			$query_string = base64_encode(implode(',', array($study_id, $subject_id)));

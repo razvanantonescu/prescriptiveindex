@@ -105,9 +105,18 @@ if(isset($_GET["study_id"])){
 
 
       <p><a href="edit_study.php?study_id=<?php echo $study_id ?>"><?php __("Edit study") ?></a></p>
-
-      <a class="download csv" href="csv.php?study_id=<?php echo $study_id ?>" title="<?php __('Download in csv format') ?>"><?php __('Download in csv format') ?></a>
-
+      
+      <?php
+         $query = "SELECT * FROM results WHERE `study_id` = '".$study_id."'";
+         $result = mysql_query($query);
+         confirm_query($result);
+         $num_rows = mysql_num_rows($result);
+         if(mysql_num_rows($result) > 0){
+      ?>
+            <a class="download csv" href="csv.php?study_id=<?php echo $study_id ?>" title="<?php __('Download in csv format') ?>"><?php __('Download in csv format') ?></a>
+      <?php
+         }
+      ?>
    </div>
 
 <?php
