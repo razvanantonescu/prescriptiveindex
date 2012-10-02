@@ -172,7 +172,7 @@
 								$subj_name = $row['first_name'] ." ". $row['last_name'];
 								$subj_email = $row['email'];
 								$query="INSERT IGNORE INTO mails (`study_id`, `subj_id`, `nume`, `email`, `titlu`, `body`)
-											VALUES ('".$study_id."', '".$subj_id."', '".$subj_name."', '".$subj_email."', 'Un titlu', '".$template_body."');
+											VALUES ('".$study_id."', '".$subj_id."', '".$subj_name."', '".$subj_email."', '".$title."', '".$template_body."');
 											";
 								$result = mysql_query($query, $dbconnect);
 								confirm_query($result);
