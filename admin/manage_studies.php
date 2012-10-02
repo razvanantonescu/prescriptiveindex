@@ -9,6 +9,7 @@
                <li class="head">
                   <span class="name"><?php __("Study name") ?></span>
                   <span class="description"><?php __("Description") ?></span>
+                  <span class="type"><?php __("Type") ?></span>
                </li>
          <?php          
             $result = get_all_studies ();
@@ -21,10 +22,12 @@
                $study_desc_en = decode($row["desc"], "en");
                $study_name = decode($row["name"], $lang);
                $study_desc = decode($row["desc"], $lang);
+               $study_type = $row["study_type"];
             ?>
                <li>
                   <span class="name"><?php echo $study_name ?></span>
                   <span class="description"><?php echo $study_desc ?></span>
+                  <span class="type"><?php echo $study_type ?></span>
                   <span class="view"><a href="view_study.php?study_id=<?php echo $study_id ?>"><?php __("View") ?></a></span>
                   <span class="edit"><a href="edit_study.php?study_id=<?php echo $study_id ?>"><?php __("Edit") ?></a></span>
                </li>

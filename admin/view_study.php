@@ -14,12 +14,14 @@ if(isset($_GET["study_id"])){
       $study_desc_en = decode($row["desc"], "en");
       $study_name = decode($row["name"], $lang);
       $study_desc = decode($row["desc"], $lang);
+      $study_type = $row["study_type"];
    ?>
    <h1 class="studies"><?php echo $study_name ?></h1>
    
    <div id="list_details">
    <?php echo output_message() ?>
       <p><strong><?php __("Study Name") ?>:</strong> <?php echo $study_name ?></p>
+      <p><strong><?php __("Type") ?>:</strong> <?php echo $study_type ?></p>
       <p><strong><?php __("Description") ?>:</strong> <?php echo $study_desc ?></p>
       
       <p><?php __("Questionnaires included in this study") ?>:</p>

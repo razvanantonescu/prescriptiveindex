@@ -14,6 +14,7 @@ if(isset($_GET["study_id"])){ /////////////////////////////// EDIT STUDY
       $study_desc_en = stripslashes(decode($row["desc"], "en"));
       $study_name = stripslashes(decode($row["name"], $lang));
       $study_desc = stripslashes(decode($row["desc"], $lang));
+      $study_type = $row["study_type"];
    ?>
 
    <h1 class="studies"><?php __("Edit study") ?> - <?php echo $study_name ?></h1>
@@ -42,6 +43,13 @@ if(isset($_GET["study_id"])){ /////////////////////////////// EDIT STUDY
             <label for="study_desc"><?php __("Description (en)") ?></label>
             <textarea class="required" name="study_desc_en"><?php echo $study_desc_en ?></textarea>
          </div>
+      </fieldset>
+
+   
+      <fieldset>
+         <label for="study_type"><?php __("Study type") ?>:</label>
+            <input type="radio" name="study_type" value="normal" <?php if($study_type == "normal"): ?>checked<?php endif ?> /> <?php __("normal") ?>
+            <input type="radio" name="study_type" value="360" <?php if($study_type == "360"): ?>checked<?php endif ?> /> <?php __("360") ?>
       </fieldset>
 
       <fieldset>
@@ -126,6 +134,12 @@ if(isset($_GET["study_id"])){ /////////////////////////////// EDIT STUDY
             <label for="study_desc_en"><?php __("Description (en)") ?></label>
             <textarea class="required" name="study_desc_en"></textarea>
          </div>
+      </fieldset>
+
+      <fieldset>
+         <label for="study_type"><?php __("Questionnaire type") ?>:</label>
+            <input type="radio" name="study_type" value="normal" checked /> <?php __("normal") ?>
+            <input type="radio" name="study_type" value="360" /> <?php __("360") ?>
       </fieldset>
 
       <fieldset>

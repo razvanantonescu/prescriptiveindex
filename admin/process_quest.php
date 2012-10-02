@@ -28,7 +28,7 @@
 
    if(isset($_POST["quest_max_score"])) $max_score = htmlspecialchars($_POST["quest_max_score"]);
    if(isset($_POST["display_type"])) $display_type = $_POST["display_type"];
-   if(isset($_POST["display_type"])) $quest_type = $_POST["quest_type"];
+   if(isset($_POST["quest_type"])) $quest_type = $_POST["quest_type"];
 
    if(isset($_POST["number_of_questions"])) $number_of_questions = $_POST["number_of_questions"];
 

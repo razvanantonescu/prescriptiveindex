@@ -537,6 +537,18 @@ function get_study_name($study_id, $lang) {
 }
 
 
+function get_study_type($study_id) {
+   global $dbconnect;
+   $query = "SELECT `study_type` FROM studies WHERE study_id={$study_id}";
+   $result = mysql_query($query, $dbconnect);
+   confirm_query($result);
+   $row = mysql_fetch_array($result);
+   $study_type = $row['study_type'];
+   return $study_type;
+}
+
+
+
 function get_sel_list_for_study($study_id) {
    global $dbconnect;
    $query = "SELECT rel_list_study.list_id FROM rel_list_study WHERE rel_list_study.study_id = {$study_id}";
@@ -591,19 +603,51 @@ function get_question_type ($question_id){
 }
 
 
-
 function subject_completed_study($subj_id, $study_id) {
-	 global $dbconnect;
-         $query = "SELECT * FROM results WHERE subj_id = ".$subj_id." AND study_id = ".$study_id;
-         $result = mysql_query($query, $dbconnect);
-	 confirm_query($result);
-	 $num = mysql_num_rows($result);
-	 if($num == 0) {
-	    return false;
-	 } else {
-	    return true;
-	 }
+	global $dbconnect;
+	
+	$query = "SELECT study_type FROM studies WHERE study_id=".$study_id;
+	$result = mysql_query($query, $dbconnect);
+	confirm_query($result);
+   $row = mysql_fetch_array($result);
+	$study_type = $row["study_type"];
+	
+	if($study_type != '360') {
+		$query = "SELECT * FROM results WHERE subj_id = ".$subj_id." AND study_id = ".$study_id;
+		$result = mysql_query($query, $dbconnect);
+		confirm_query($result);
+		$num = mysql_num_rows($result);
+		if($num == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	} else {
+		return false;
+	}
 }
+
+function get_rel_subj_id($subject_id, $response_id) {
+	global $dbconnect;
+	$query = "SELECT `rel_subj_id` FROM multievaluator WHERE `subj_id` = '".$subject_id."' AND `response_id` = '".$response_id."'";
+	$result = mysql_query($query, $dbconnect);
+	confirm_query($result);
+   $row = mysql_fetch_array($result);
+	$rel_subj_id = $row["rel_subj_id"];
+	return $rel_subj_id;
+}
+
+function get_relation($subject_id, $response_id) {
+	global $dbconnect;
+	$query = "SELECT `relation` FROM multievaluator WHERE `subj_id` = '".$subject_id."' AND `response_id` = '".$response_id."'";
+	$result = mysql_query($query, $dbconnect);
+	confirm_query($result);
+   $row = mysql_fetch_array($result);
+	$relation = $row["relation"];
+	return $relation;
+}
+
+
 
 
 ?>

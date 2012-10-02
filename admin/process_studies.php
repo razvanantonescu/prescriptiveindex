@@ -34,13 +34,17 @@
    $study_name = mysql_real_escape_string(json_encode($study_name));
    $study_desc = mysql_real_escape_string(json_encode($study_desc));
 
+   if(isset($_POST["study_type"])) $study_type = $_POST["study_type"];
+
+
 // edit STUDY
    
    if ($action == "edit") {
 
       $query = "UPDATE `studies` SET 
                `name` = '".$study_name."',
-               `desc` = '".$study_desc."'  
+               `desc` = '".$study_desc."', 
+               `study_type` = '".$study_type."' 
                WHERE `study_id` = '".$study_id."'
                ";
 
@@ -140,8 +144,8 @@
    
    if ($action == "add") {
 
-      $query = "INSERT INTO studies (`name`, `desc`)
-               VALUES ('".$study_name."', '".$study_desc."')";
+      $query = "INSERT INTO studies (`name`, `desc`, `study_type`)
+               VALUES ('".$study_name."', '".$study_desc."', '".$study_type."')";
 
       if ($result = mysql_query($query, $dbconnect)) {
             $study_id = mysql_insert_id();
@@ -167,9 +171,8 @@
 								$subj_id = $row['subj_id'];
 								$subj_name = $row['first_name'] ." ". $row['last_name'];
 								$subj_email = $row['email'];
-                                                                $title = get_study_name($study_id, $lang);
 								$query="INSERT IGNORE INTO mails (`study_id`, `subj_id`, `nume`, `email`, `titlu`, `body`)
-											VALUES ('".$study_id."', '".$subj_id."', '".$subj_name."', '".$subj_email."', '".$title."', '".$template_body."');
+											VALUES ('".$study_id."', '".$subj_id."', '".$subj_name."', '".$subj_email."', 'Un titlu', '".$template_body."');
 											";
 								$result = mysql_query($query, $dbconnect);
 								confirm_query($result);

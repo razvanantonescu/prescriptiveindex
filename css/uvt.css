@@ -125,7 +125,8 @@ h1.info.active-toggle {
 #list_details li span.name,
 #list_details li span.description {display:block; float:left;}
 #list_details li span.name{width:220px;}
-#list_details li span.description{width:410px;}
+#list_details li span.description{width:400px;}
+#list_details li span.type{width:70px; padding:0 5px;}
 #list_details .edit,
 #list_details .view {float:right; text-align:center; width:50px;}
 #list_details .first_name{width:180px;}
