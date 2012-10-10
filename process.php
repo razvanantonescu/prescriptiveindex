@@ -41,8 +41,8 @@
 		$row = mysql_fetch_array($result);
 		$study_type = $row["study_type"];
 
-		echo "<pre>";
-		var_dump($_POST);
+#		echo "<pre>";
+#		var_dump($_POST);
 		//die('gata');
 		
 		$tester = subject_completed_study($subject_id, $study_id);
@@ -60,9 +60,9 @@
 		foreach($_POST as $question_id => $answer) {
 			
 			$question_type = get_question_type($question_id);
-$check = "SELECT * FROM results
+			$check = "SELECT * FROM results
 			WHERE study_id = ".$study_id." AND subj_id = ".$subject_id." AND question_id = ".$question_id." AND response_id = '".$response_id."'";
-			echo $check;
+#			echo $check;
 			$result = mysql_query($check, $dbconnect);
 			
 			if(mysql_num_rows($result) == 0){

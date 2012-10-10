@@ -57,12 +57,38 @@ if(isset($_GET["subj_id"])){
 			foreach($study_ids as $study_id) {
 			   $result = get_study($study_id);
 			   $row = mysql_fetch_array($result);
-					$study_id = $row["study_id"];
-					$study_name = decode($row["name"], $lang);
+			   $study_id = $row["study_id"];
+			   $study_name = decode($row["name"], $lang);
+			   $query = "
+select
+  questionnaires.name as name,
+  questionnaires.questionnaire_id as id
+from
+  questionnaires,
+  rel_questionnaire_study
+where
+  rel_questionnaire_study.study_id = ".$study_id."
+  and rel_questionnaire_study.questionnaire_id = questionnaires.questionnaire_id
+			   ";
+			   $result = mysql_query($query, $dbconnect);
+			   $quest = array();
+			   while($row = mysql_fetch_array($result))
+			   {
+			     $quest[] = array($row['name'], $row['id']);
+			   }
 	    ?>
 				<li>
 				 <a href="view_study.php?study_id=<?php echo $study_id ?>"><?php echo $study_name ?></a> - 
 				 <a href="view_results.php?study_id=<?php echo $study_id ?>&subj_id=<?php echo $subj_id ?>"><?php __('answers') ?></a>
+				 <?php
+				   foreach ($quest as $q)
+				   {
+				     $qname = json_decode($q[0]);
+                                 ?>
+                                 <br><a style='padding-left:20px' href="view_scoring.php?study_id=<?php echo $study_id ?>&quest_id=<?php echo $q[1] ?>&subj_id=<?php echo $subj_id ?>"><?php __('Scoring '); echo " ".($_SESSION['lang'] == 'ro' ? $qname->ro : $qname->en); ?></a> - <a href="view_raport.php?study_id=<?php echo $study_id ?>&quest_id=<?php echo $q[1] ?>&subj_id=<?php echo $subj_id ?>"><?php __('Raport '); echo " ".($_SESSION['lang'] == 'ro' ? $qname->ro : $qname->en); ?></a>
+                                 <?php
+				   }
+				 ?>
 				</li>
 	    <?php
 			}

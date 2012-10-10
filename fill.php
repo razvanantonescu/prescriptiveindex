@@ -139,8 +139,8 @@
 											'ro' => array(
 																1 => 'subordonat',
 																2 => 'manager',
-																3 => 'egal',
-																4 => 'sine însuşi',
+																3 => 'coleg',
+																4 => 'autoevaluare',
 																5 => 'client'
 															),
 											'en' => array(
@@ -190,23 +190,84 @@
 				?>
 						<div class="questionnaire_unit quest_<?php echo $questionnaire_index ?>">
 						<h3><strong><?php echo $questionnaire_name ?></strong></h3>
-						<?php //echo $quest_type ?>
 						<div class="desc" style="margin-bottom:20px;">
 							<?php echo nl2br($questionnaire_desc, false) ?>
 						</div>
+						<?php
+							if ($questionnaire_id == 1 || $questionnaire_id == 13 || $questionnaire_id == 14)
+							{
+						?>
+						Utilizati urmatoarea scala pentru a registra raspunsurile dumneavoastra:<br>
+						<table valign='middle'>
+							<tr>
+								<td valing='middle' style='vertical-align:middle;padding:2px' align='center'>
+									<span style='align:center; height:20px; width:20px; background-image:url(images/sprite.png); background-position:0px -520px; background-repeat:no-repeat;'></span>
+								</td>
+								<td valing='middle' style='vertical-align:middle;padding:2px'>
+									foarte usor sau deloc
+								</td>
+							</tr>
+							<tr>
+								<td valing='middle' style='vertical-align:middle;padding:2px' align='center'>
+									<span style='align:center; height:25px; width:25px; background-image:url(images/sprite.png); background-position:-20px -520px; background-repeat:no-repeat;'></span>
+								</td>
+								<td valing='middle' style='vertical-align:middle;padding:2px'>
+									putin
+								</td>
+							</tr>
+							<tr>
+								<td valing='middle' style='vertical-align:middle;padding:2px' align='center'>
+									<span style='align:center; height:30px; width:30px; background-image:url(images/sprite.png); background-position:-45px -520px; background-repeat:no-repeat;'></span>
+								</td>
+								<td valing='middle' style='vertical-align:middle;padding:2px'>
+									moderat
+								</td>
+							</tr>
+							<tr>
+								<td valing='middle' style='vertical-align:middle;padding:2px' align='center'>
+									<span style='align:center; height:35px; width:35px; background-image:url(images/sprite.png); background-position:-75px -520px; background-repeat:no-repeat;'></span>
+								</td>
+								<td valing='middle' style='vertical-align:middle;padding:2px'>
+									destul de mult
+								</td>
+							</tr>
+							<tr>
+								<td valing='middle' style='vertical-align:middle;padding:2px' align='center'>
+									<p><span style='align:center; height:40px; width:40px; background-image:url(images/sprite.png); background-position:-110px -520px; background-repeat:no-repeat;'></span>
+								</td>
+								<td valing='middle' style='vertical-align:middle;padding:2px'>
+									extrem
+								</td>
+							</tr>
+						</table>
+						<?php
+							}
+						?>
 
 <!-- display normal -->
 						<?php if ($display_type == 'normal'): ?>
 						<div class="questionnaire">
 							<ul class="question fill">
 								<?php
+								$i = 1;
 								while ($row = mysql_fetch_array($result)) {
 									$question_id = $row['question_id'];
 									$question_type = $row['type'];
 									$question_name = decode($row['name'], $lang);
 								?>
+									<?php
+										if ($i == 11 && $questionnaire_id == 4)
+											echo "<br>Sectiunea 2.<br>Va rugam sa va ganditi la o situatie la serviciu cand ati avut rezultate slabe dvs. sau colegii/ echipa din care faceti parte. Incercati sa va amintiti gandurile pe care le-ati avut intr-o asemenea situatie si apreciati cat de mult reprezinta afirmatiile de mai jos gandurile pe care le-ati avut.<br>";
+										if ($i == 21 && $questionnaire_id == 4)
+											echo "<br>Sectiunea 3.<br>Va rugam sa va ganditi la o situatie la serviciu in care v-ati simtit inconfortabil, stresati sau a trebui sa realizati activitati care nu va plac. Incercati sa va amintiti gandurile pe care le-ati avut intr-o asemenea situatie si apreciati cat de mult reprezinta afirmatiile de mai jos gandurile pe care le-ati avut.<br>";
+
+										if ($i == 11 && $questionnaire_id == 7)
+											echo "<br>Sectiunea 2.<br>Va rugam sa va ganditi la o situatie la serviciu in care performanta dvs. nu a fost atat de buna precum va asteptati sau in care aceasta nu a fost apreciata. Incercati sa va amintiti gandurile pe care le-ati avut intr-o asemenea situatie si apreciati cat de mult reprezinta afirmatiile de mai jos gandurile pe care le-ati avut.<br>";
+										if ($i == 21 && $questionnaire_id == 7)
+											echo "<br>Sectiunea 3.<br>Va rugam sa va ganditi la o situatie la serviciu in care v-ati simtit stresati. Incercati sa va amintiti gandurile pe care le-ati avut intr-o asemenea situatie si apreciati cat de mult reprezinta afirmatiile de mai jos gandurile pe care le-ati avut.<br>";
+									?>
 								<li>
-									<p><strong><em><?php echo html_entity_decode($question_name) ?></em></strong></p>
+									<p><strong><?php echo $i++; ?>. <em><?php echo html_entity_decode($question_name) ?></em></strong></p>
 									<ul class="answer fill">
 									<?php
 										if($question_type == 'choice') {
